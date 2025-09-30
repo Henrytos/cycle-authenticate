@@ -1,0 +1,17 @@
+### Artefatos de Build (Gerados pelo Maven) ###
+target/
+
+### Arquivos de Ambiente Local ###
+.env
+.DS_Store
+.git
+.gitignore
+.idea/
+.vscode/
+
+### Logs e Cache da Aplicação ###
+*.log
+logs/
+
+### Dependências Locais do Maven ###
+.m2/

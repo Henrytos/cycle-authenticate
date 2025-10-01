@@ -1,6 +1,6 @@
-package domain.value_objects;
+package com.stefanini.cycle_authenticate.domain.value_objects;
 
-import domain.exceptions.EmailInvalid;
+import com.stefanini.cycle_authenticate.domain.exceptions.EmailNotWithinStandards;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,7 +10,7 @@ public class Email {
 
     public Email(String value){
         if(!this.isValid(value)){
-            throw new EmailInvalid();
+            throw new EmailNotWithinStandards();
         }
 
         this.value = value;

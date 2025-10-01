@@ -1,6 +1,6 @@
-package domain.entities;
+package com.stefanini.cycle_authenticate.domain.entities;
 
-import domain.value_objects.Email;
+import com.stefanini.cycle_authenticate.domain.value_objects.Email;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,6 +12,8 @@ public class User {
     private String username;
 
     private Email email;
+
+    private String password;
 
     private LocalDate date_of_brith;
 

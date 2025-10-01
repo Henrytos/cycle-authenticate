@@ -1,11 +1,19 @@
 package com.stefanini.cycle_authenticate.infra.adapters.outbound.database.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserModel {
 
     @Id

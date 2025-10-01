@@ -1,6 +1,7 @@
 package com.stefanini.cycle_authenticate.domain.entities;
 
 import com.stefanini.cycle_authenticate.domain.value_objects.Email;
+import com.stefanini.cycle_authenticate.domain.value_objects.Password;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -13,24 +14,25 @@ public class User {
 
     private Email email;
 
-    private String password;
+    private Password password;
 
-    private LocalDate date_of_brith;
+    private LocalDate dateOfBrith;
 
     public User() {
     }
 
-    public User(UUID id, String username, Email email, LocalDate date_of_brith) {
-        this.id = id;
+    public User( String username, Email email, Password password, LocalDate dateOfBrith) {
+        this.id = null;
         this.username = username;
         this.email = email;
-        this.date_of_brith = date_of_brith;
+        this.password = password;
+        this.dateOfBrith = dateOfBrith;
     }
-
 
     public UUID getId() {
         return id;
     }
+
 
     public String getUsername() {
         return username;
@@ -48,11 +50,19 @@ public class User {
         this.email = email;
     }
 
-    public LocalDate getDate_of_brith() {
-        return date_of_brith;
+    public Password getPassword() {
+        return password;
     }
 
-    public void setDate_of_brith(LocalDate date_of_brith) {
-        this.date_of_brith = date_of_brith;
+    public void setPassword(Password password) {
+        this.password = password;
+    }
+
+    public LocalDate getDateOfBrith() {
+        return dateOfBrith;
+    }
+
+    public void setDateOfBrith(LocalDate dateOfBrith) {
+        this.dateOfBrith = dateOfBrith;
     }
 }

@@ -8,7 +8,7 @@ import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.SessionTokenDTO;
 import com.stefanini.cycle_authenticate.application.ports.outbound.repositories.UserRepositoryPort;
 import com.stefanini.cycle_authenticate.application.ports.outbound.security.EncryptionServicePort;
-import com.stefanini.cycle_authenticate.application.ports.outbound.security.SessionTokenService;
+import com.stefanini.cycle_authenticate.application.ports.outbound.security.SessionTokenServicePort;
 import com.stefanini.cycle_authenticate.domain.entities.User;
 import com.stefanini.cycle_authenticate.domain.exceptions.EmailNotWithinStandards;
 import com.stefanini.cycle_authenticate.domain.exceptions.PasswordNotWithinStandards;
@@ -21,9 +21,9 @@ public class UserServiceImpl implements UserServicePort {
 
     private EncryptionServicePort encryptionServicePort;
 
-    private SessionTokenService sessionTokenService;
+    private SessionTokenServicePort sessionTokenService;
 
-    public UserServiceImpl(UserRepositoryPort userRepositoryPort, EncryptionServicePort encryptionServicePort, SessionTokenService sessionTokenService) {
+    public UserServiceImpl(UserRepositoryPort userRepositoryPort, EncryptionServicePort encryptionServicePort, SessionTokenServicePort sessionTokenService) {
         this.userRepositoryPort = userRepositoryPort;
         this.encryptionServicePort = encryptionServicePort;
         this.sessionTokenService = sessionTokenService;

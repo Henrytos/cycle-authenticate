@@ -29,6 +29,15 @@ public class User {
         this.dateOfBrith = dateOfBrith;
     }
 
+    public User(UUID id, String username, Email email, Password password, LocalDate dateOfBrith) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.dateOfBrith = dateOfBrith;
+    }
+
+
     public UUID getId() {
         return id;
     }

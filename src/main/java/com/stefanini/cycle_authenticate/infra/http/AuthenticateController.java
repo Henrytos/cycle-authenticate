@@ -4,6 +4,7 @@ import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundExcep
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.UserServicePort;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateUserDTO;
 import com.stefanini.cycle_authenticate.domain.entities.User;
+import com.stefanini.cycle_authenticate.infra.http.presenters.CreateUserPresenter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +22,11 @@ public class AuthenticateController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(
+    public ResponseEntity<CreateUserPresenter> create(
             @RequestBody CreateUserDTO createUserDTO
     ) throws UserNotFoundException {
         User user = this.userServicePort.create(createUserDTO);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(CreateUserPresenter.toHttp(user));
     }
 
 }

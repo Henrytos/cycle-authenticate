@@ -2,7 +2,7 @@ package com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos
 
 import java.time.LocalDate;
 
-public abstract class CreateUserDTO{
+public class CreateUserDTO{
     String username ;
     String email;
     String password ;
@@ -38,5 +38,15 @@ public abstract class CreateUserDTO{
 
     public void setDateOfBrith(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateUserDTO{" +
+               "username='" + username + '\'' +
+               ", email='" + email + '\'' +
+               ", password='" + password + '\'' +
+               ", dateOfBirth=" + dateOfBirth +
+               '}';
     }
 }

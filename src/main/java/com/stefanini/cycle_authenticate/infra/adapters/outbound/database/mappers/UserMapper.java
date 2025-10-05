@@ -10,42 +10,51 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public UserMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.configureMappings();
     }
 
-    /**
-     * this.mapper.typeMap(UserEntity.class, User.class).addMappings(
-     * mapper ->{
-     * mapper.map(UserEntity::getName, User::setName);
-     * mapper.map(src-> Email.of(src.getEmail()) ,User::setEmail);
-     * mapper.map(UserEntity::getPassword, User::setPassword);
-     * mapper.map(src-> Role.valueOf(src.getRole()),User::setRole);
-     * }
-     * );
-     *
-     */
+    private void configureMappings() {
+       this.modelMapper.typeMap(UserModel.class, User.class).addMappings( modelMapper->{
+           modelMapper.using(ctx-> new Email((String) ctx.getSource()))
+                   .map(UserModel::getEmail, User::setEmail);
+
+           modelMapper.using(ctx -> new Password((String) ctx.getSource()))
+                   .map(UserModel::getPassword, User::setPassword);
+       });
+
+        this.modelMapper.typeMap(User.class, UserModel.class).addMappings(mapper -> {
+            mapper
+                    .using(ctx->{
+                        Password password = (Password) ctx.getSource();
+                        return password != null ? password.getValue() : null;
+                    })
+                    .map(User::getPassword, UserModel::setPassword);
+
+            mapper
+                    .using(ctx->{
+                        Email email = (Email) ctx.getSource();
+                        return email != null ? email.getValue() : null;
+                    })
+                    .map(User::getEmail, UserModel::setEmail);
+        });
+    }
+
     public User toDomain(UserModel userModel) {
-        this.modelMapper.typeMap(UserModel.class, User.class).addMappings(
-                modelMapper -> {
-                    modelMapper.map(model -> new Email(model.getEmail()), User::setEmail);
-                    modelMapper.map(model -> new Password(model.getPassword()), User::setPassword);
-                }
-        );
+        if (userModel == null) {
+            return null;
+        }
 
         return this.modelMapper.map(userModel, User.class);
     }
 
     public UserModel toModel(User user) {
-        this.modelMapper.typeMap(User.class, UserModel.class).addMappings(
-                modelMapper -> {
-                    modelMapper.map(entity -> entity.getEmail().getValue(), UserModel::setEmail);
-                    modelMapper.map(entity -> entity.getPassword().getValue(), UserModel::setPassword);
-
-                }
-        );
+        if (user == null) {
+            return null;
+        }
 
         return this.modelMapper.map(user, UserModel.class);
     }

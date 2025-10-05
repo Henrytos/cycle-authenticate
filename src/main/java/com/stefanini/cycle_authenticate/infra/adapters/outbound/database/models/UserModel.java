@@ -32,4 +32,16 @@ public class UserModel {
     @Column(name = "date_of_brith")
     private LocalDate dateOfBrith;
 
+
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+               "id=" + id +
+               ", username='" + username + '\'' +
+               ", email='" + email + '\'' +
+               ", password='" + password + '\'' +
+               ", dateOfBrith=" + dateOfBrith +
+               '}';
+    }
 }

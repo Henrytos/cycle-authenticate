@@ -14,7 +14,11 @@ import com.stefanini.cycle_authenticate.domain.exceptions.EmailNotWithinStandard
 import com.stefanini.cycle_authenticate.domain.exceptions.PasswordNotWithinStandards;
 import com.stefanini.cycle_authenticate.domain.value_objects.Email;
 import com.stefanini.cycle_authenticate.domain.value_objects.Password;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@Service
 public class UserServiceImpl implements UserServicePort {
 
     private UserRepositoryPort userRepositoryPort;
@@ -31,15 +35,19 @@ public class UserServiceImpl implements UserServicePort {
 
     @Override
     public User create(CreateUserDTO createUserDTO) throws EmailNotWithinStandards, PasswordNotWithinStandards, UserAlreadyExistsException {
+        if(!Email.isValid(createUserDTO.getEmail())){
+            throw new EmailNotWithinStandards();
+        }
         Email email = new Email(createUserDTO.getEmail());
 
-        if (Password.isValid(createUserDTO.getPassword())) {
+        if (!Password.isValid(createUserDTO.getPassword())) {
             throw new PasswordNotWithinStandards();
         }
-
-        Password password = new Password(createUserDTO.getPassword());
-
-        this.userRepositoryPort.findByEmail(email).orElseThrow(UserAlreadyExistsException::new);
+        Password password = new Password(this.encryptionServicePort.encode(createUserDTO.getPassword()));
+        Optional<User> userFind = this.userRepositoryPort.findByEmail(email);
+        if(userFind.isPresent()){
+            throw new UserAlreadyExistsException();
+        };
 
         User user = new User(createUserDTO.getUsername(), email, password, createUserDTO.getDateOfBrith());
 

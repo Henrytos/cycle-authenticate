@@ -37,11 +37,13 @@ public class User {
         this.dateOfBrith = dateOfBrith;
     }
 
-
     public UUID getId() {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -73,5 +75,16 @@ public class User {
 
     public void setDateOfBrith(LocalDate dateOfBrith) {
         this.dateOfBrith = dateOfBrith;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+               "id=" + id +
+               ", username='" + username + '\'' +
+               ", email=" + email +
+               ", password=" + password +
+               ", dateOfBrith=" + dateOfBrith +
+               '}';
     }
 }

@@ -8,15 +8,15 @@ import java.util.regex.Pattern;
 public class Email {
     private String value;
 
+    public Email() {
+    }
+
     public Email(String value){
-        if(!this.isValid(value)){
-            throw new EmailNotWithinStandards();
-        }
 
         this.value = value;
     }
 
-    private Boolean isValid(String email){
+    static public Boolean isValid(String email){
         String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
         Matcher  matcher = EMAIL_PATTERN.matcher(email);
@@ -31,4 +31,5 @@ public class Email {
     public void setValue(String value) {
         this.value = value;
     }
+
 }

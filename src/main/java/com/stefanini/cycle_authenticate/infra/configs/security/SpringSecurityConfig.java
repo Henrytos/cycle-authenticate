@@ -19,6 +19,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth ->{
                     auth.requestMatchers(HttpMethod.POST, "/users").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/users/*").permitAll();
+                    auth.requestMatchers( "/docs").permitAll();
                 })
         ;
 

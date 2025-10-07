@@ -2,7 +2,7 @@ package com.stefanini.cycle_authenticate.application.exceptions;
 
 public class UserAlreadyExistsException extends RuntimeException{
 
-    private int statusCode = 401;
+    private int status = 401;
 
     public UserAlreadyExistsException(){
         super("the user already exists in the application");
@@ -12,16 +12,16 @@ public class UserAlreadyExistsException extends RuntimeException{
         super(message);
     }
 
-    public UserAlreadyExistsException(String message, int statusCode){
+    public UserAlreadyExistsException(String message, int status){
         super(message);
-        this.statusCode = statusCode;
+        this.status = status;
     }
 
     public int getStatusCode() {
-        return statusCode;
+        return status;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setStatusCode(int status) {
+        this.status = status;
     }
 }

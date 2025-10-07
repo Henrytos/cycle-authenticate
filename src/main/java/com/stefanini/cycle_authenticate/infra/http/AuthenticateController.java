@@ -7,6 +7,7 @@ import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.
 import com.stefanini.cycle_authenticate.domain.entities.User;
 import com.stefanini.cycle_authenticate.domain.value_objects.Email;
 import com.stefanini.cycle_authenticate.domain.value_objects.Password;
+import com.stefanini.cycle_authenticate.infra.http.dtos.AuthenticationBodyDTO;
 import com.stefanini.cycle_authenticate.infra.http.presenters.CreateUserPresenter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,10 +35,9 @@ public class AuthenticateController {
 
     @PostMapping("/auth")
     public ResponseEntity<SessionTokenDTO> auth(
-            @RequestBody String email,
-            @RequestBody String password
+            @RequestBody AuthenticationBodyDTO dto
     ) throws UserNotFoundException {
-        SessionTokenDTO sessionTokenDTO  = this.userServicePort.authenticate(new Email(email), new Password(password));
+        SessionTokenDTO sessionTokenDTO  = this.userServicePort.authenticate(new Email(dto.email()), new Password(dto.password()));
         return ResponseEntity.ok().body(sessionTokenDTO);
     }
 

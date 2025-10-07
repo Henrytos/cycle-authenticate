@@ -1,6 +1,7 @@
 
 services:
   database:
+    container_name: cycle_database
     image: postgres
     ports:
       - "5432:5432"
@@ -8,7 +9,12 @@ services:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
+    networks:
+      - cycle_network
+    volumes:
+      - database_volume:/var/lib/postgresql
   api:
+    container_name: cycle_api
     build:
       context: .
       dockerfile: Dockerfile
@@ -18,3 +24,13 @@ services:
       - .env
     depends_on:
       - database
+    networks:
+      - cycle_network
+
+volumes:
+  database_volume:
+    name: cycle_database_volume
+
+networks:
+  cycle_network:
+    name: cycle_network

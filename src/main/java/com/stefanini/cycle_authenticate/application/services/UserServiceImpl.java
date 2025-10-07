@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserServicePort {
 
     @Override
     public User create(CreateUserDTO createUserDTO) throws EmailNotWithinStandards, PasswordNotWithinStandards, UserAlreadyExistsException {
-        if(!Email.isValid(createUserDTO.email())){
+        if (!Email.isValid(createUserDTO.email())) {
             throw new EmailNotWithinStandards();
         }
         Email email = new Email(createUserDTO.email());
@@ -45,9 +45,10 @@ public class UserServiceImpl implements UserServicePort {
         }
         Password password = new Password(this.encryptionServicePort.encode(createUserDTO.password()));
         Optional<User> userFind = this.userRepositoryPort.findByEmail(email);
-        if(userFind.isPresent()){
+        if (userFind.isPresent()) {
             throw new UserAlreadyExistsException();
-        };
+        }
+        ;
 
         User user = new User(createUserDTO.username(), email, password, createUserDTO.dateOfBirth());
 
@@ -57,9 +58,9 @@ public class UserServiceImpl implements UserServicePort {
     @Override
     public SessionTokenDTO authenticate(Email email, Password password) throws UserNotFoundException {
         User user = this.userRepositoryPort.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        Boolean passwordMatch = this.encryptionServicePort.match(user.getPassword().getValue(), password.getValue());
+        Boolean passwordMatch = this.encryptionServicePort.match(password.getValue(), user.getPassword().getValue());
 
-        if(!passwordMatch){
+        if (!passwordMatch) {
             throw new InputInvalidException("email/password invalid");
         }
 

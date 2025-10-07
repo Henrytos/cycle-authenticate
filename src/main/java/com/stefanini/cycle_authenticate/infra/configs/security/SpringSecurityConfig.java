@@ -24,7 +24,7 @@ public class SpringSecurityConfig {
         httpSecurity
                 .csrf(csrfConfigurer -> csrfConfigurer.disable())
                 .authorizeHttpRequests(auth ->{
-                    auth.requestMatchers(HttpMethod.POST, "/users").permitAll().requestMatchers(HttpMethod.POST, "/users/*").permitAll().requestMatchers(this.ROUTE_PERMIT).permitAll().anyRequest().authenticated();
+                    auth.requestMatchers(HttpMethod.POST, "/users").permitAll().requestMatchers(HttpMethod.POST, "/users/auth").permitAll().requestMatchers(this.ROUTE_PERMIT).permitAll().anyRequest().authenticated();
                 });
 
         return httpSecurity.build();

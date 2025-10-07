@@ -21,7 +21,7 @@ public class User {
     public User() {
     }
 
-    public User( String username, Email email, Password password, LocalDate dateOfBrith) {
+    public User(String username, Email email, Password password, LocalDate dateOfBrith) {
         this.id = null;
         this.username = username;
         this.email = email;

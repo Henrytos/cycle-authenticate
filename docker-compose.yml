@@ -1,12 +1,9 @@
 
 services:
   database:
-    container_name: cycle_database
     image: postgres
     ports:
       - "5432:5432"
-    volumes:
-      - database_volume:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -21,7 +18,3 @@ services:
       - .env
     depends_on:
       - database
-
-volumes:
-  database_volume:
-    name: database_volume

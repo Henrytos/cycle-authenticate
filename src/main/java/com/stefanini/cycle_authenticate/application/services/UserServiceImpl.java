@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserServicePort {
         if (userFind.isPresent()) {
             throw new UserAlreadyExistsException();
         }
-        ;
 
         User user = new User(createUserDTO.username(), email, password, createUserDTO.dateOfBirth());
 

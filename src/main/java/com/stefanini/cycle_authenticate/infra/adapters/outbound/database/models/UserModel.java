@@ -25,14 +25,18 @@ public class UserModel {
 
     private String email;
 
-
     @Column(name = "password_hash")
     private String password;
 
     @Column(name = "date_of_brith")
     private LocalDate dateOfBrith;
 
-
+    public UserModel(String username, String email, String password, LocalDate dateOfBrith) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.dateOfBrith = dateOfBrith;
+    }
 
     @Override
     public String toString() {

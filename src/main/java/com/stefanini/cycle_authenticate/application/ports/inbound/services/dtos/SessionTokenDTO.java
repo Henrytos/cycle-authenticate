@@ -1,6 +1,6 @@
 package com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos;
 
-public abstract class SessionTokenDTO {
+public class SessionTokenDTO {
 
     private String token;
 

@@ -1,5 +1,6 @@
 package com.stefanini.cycle_authenticate.infra.http;
 
+import com.stefanini.cycle_authenticate.application.exceptions.InputInvalidException;
 import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundException;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.UserServicePort;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateUserDTO;
@@ -7,9 +8,17 @@ import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.
 import com.stefanini.cycle_authenticate.domain.entities.User;
 import com.stefanini.cycle_authenticate.domain.value_objects.Email;
 import com.stefanini.cycle_authenticate.domain.value_objects.Password;
+import com.stefanini.cycle_authenticate.infra.configs.http.ResponseMessageDTO;
 import com.stefanini.cycle_authenticate.infra.http.dtos.AuthenticationBodyDTO;
 import com.stefanini.cycle_authenticate.infra.http.presenters.CreateUserPresenter;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +35,35 @@ public class AuthenticateController {
         this.userServicePort = userServicePort;
     }
 
+    @Tag(name = "user")
+    @Operation(
+            summary = "Criação de usuario",
+            description = "rota de criação de nova conta de usuario"
+    )
+    @ApiResponses(
+            {
+                    @ApiResponse(
+                            description = "successfully crated user",
+                            content = @Content(schema = @Schema(contentSchema = CreateUserPresenter.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "user already exists",
+                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            responseCode = "401"
+                    ),
+                    @ApiResponse(
+                            description = "email is invalid",
+                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            responseCode = "400"
+                    ),
+                    @ApiResponse(
+                            description = "password must contain a special character, uppercase or lowercase and a maximum of 20 characters",
+                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            responseCode = "400"
+                    ),
+            }
+    )
     @PostMapping
     public ResponseEntity<CreateUserPresenter> create(
             @RequestBody CreateUserDTO createUserDTO
@@ -34,11 +72,35 @@ public class AuthenticateController {
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserPresenter.toHttp(user));
     }
 
+    @Tag(name = "auth")
+    @Operation(
+            summary = "Autenticação de usuario",
+            description = "Rota de autenticação atravéz de email e senha "
+    )
+    @ApiResponses(
+            {
+                    @ApiResponse(
+                            description = "successfully authentication user",
+                            content = @Content(schema = @Schema(contentSchema = SessionTokenDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "user not found",
+                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            responseCode = "404"
+                    ),
+                    @ApiResponse(
+                            description = "user not found",
+                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            responseCode = "400"
+                    ),
+            }
+    )
     @PostMapping("/auth")
     public ResponseEntity<SessionTokenDTO> auth(
             @RequestBody AuthenticationBodyDTO dto
     ) throws UserNotFoundException {
-        SessionTokenDTO sessionTokenDTO  = this.userServicePort.authenticate(new Email(dto.email()), new Password(dto.password()));
+        SessionTokenDTO sessionTokenDTO = this.userServicePort.authenticate(new Email(dto.email()), new Password(dto.password()));
         return ResponseEntity.ok().body(sessionTokenDTO);
     }
 

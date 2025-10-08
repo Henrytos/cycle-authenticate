@@ -11,8 +11,7 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
     networks:
       - cycle_network
-    volumes:
-      - database_volume:/var/lib/postgresql
+
   api:
     container_name: cycle_api
     build:
@@ -27,9 +26,6 @@ services:
     networks:
       - cycle_network
 
-volumes:
-  database_volume:
-    name: cycle_database_volume
 
 networks:
   cycle_network:

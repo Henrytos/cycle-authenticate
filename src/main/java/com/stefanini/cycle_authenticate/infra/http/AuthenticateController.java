@@ -9,6 +9,7 @@ import com.stefanini.cycle_authenticate.domain.value_objects.Email;
 import com.stefanini.cycle_authenticate.domain.value_objects.Password;
 import com.stefanini.cycle_authenticate.infra.http.dtos.AuthenticationBodyDTO;
 import com.stefanini.cycle_authenticate.infra.http.presenters.CreateUserPresenter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ public class AuthenticateController {
             @RequestBody CreateUserDTO createUserDTO
     ) throws UserNotFoundException {
         User user = this.userServicePort.create(createUserDTO);
-        return ResponseEntity.ok().body(CreateUserPresenter.toHttp(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserPresenter.toHttp(user));
     }
 
     @PostMapping("/auth")

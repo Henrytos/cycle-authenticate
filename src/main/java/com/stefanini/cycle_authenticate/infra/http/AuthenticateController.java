@@ -16,7 +16,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.catalina.security.SecurityConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
+@SecurityRequirement(name = "bearerAuth")
 public class AuthenticateController {
 
     private UserServicePort userServicePort;
@@ -44,22 +47,22 @@ public class AuthenticateController {
             {
                     @ApiResponse(
                             description = "successfully crated user",
-                            content = @Content(schema = @Schema(contentSchema = CreateUserPresenter.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            content = @Content(schema = @Schema(implementation = CreateUserPresenter.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "200"
                     ),
                     @ApiResponse(
                             description = "user already exists",
-                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "401"
                     ),
                     @ApiResponse(
                             description = "email is invalid",
-                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "400"
                     ),
                     @ApiResponse(
                             description = "password must contain a special character, uppercase or lowercase and a maximum of 20 characters",
-                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "400"
                     ),
             }
@@ -81,17 +84,17 @@ public class AuthenticateController {
             {
                     @ApiResponse(
                             description = "successfully authentication user",
-                            content = @Content(schema = @Schema(contentSchema = SessionTokenDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            content = @Content(schema = @Schema(implementation = SessionTokenDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "200"
                     ),
                     @ApiResponse(
                             description = "user not found",
-                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "404"
                     ),
                     @ApiResponse(
                             description = "user not found",
-                            content = @Content(schema = @Schema(contentSchema = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
+                            content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "400"
                     ),
             }

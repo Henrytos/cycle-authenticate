@@ -1,9 +1,8 @@
 package com.stefanini.cycle_authenticate.infra.http;
 
-import com.stefanini.cycle_authenticate.application.exceptions.InputInvalidException;
 import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundException;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.UserServicePort;
-import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateUserDTO;
+import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateUserBodyDTO;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.SessionTokenDTO;
 import com.stefanini.cycle_authenticate.domain.entities.User;
 import com.stefanini.cycle_authenticate.domain.value_objects.Email;
@@ -18,7 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.catalina.security.SecurityConfig;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +68,7 @@ public class AuthenticateController {
     )
     @PostMapping
     public ResponseEntity<CreateUserPresenter> create(
-            @RequestBody CreateUserDTO createUserDTO
+            @Valid @RequestBody CreateUserBodyDTO createUserDTO
     ) throws UserNotFoundException {
         User user = this.userServicePort.create(createUserDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(CreateUserPresenter.toHttp(user));
@@ -101,7 +100,7 @@ public class AuthenticateController {
     )
     @PostMapping("/auth")
     public ResponseEntity<SessionTokenDTO> auth(
-            @RequestBody AuthenticationBodyDTO dto
+            @Valid @RequestBody AuthenticationBodyDTO dto
     ) throws UserNotFoundException {
         SessionTokenDTO sessionTokenDTO = this.userServicePort.authenticate(new Email(dto.email()), new Password(dto.password()));
         return ResponseEntity.ok().body(sessionTokenDTO);

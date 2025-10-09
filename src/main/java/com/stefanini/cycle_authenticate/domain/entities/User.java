@@ -2,6 +2,7 @@ package com.stefanini.cycle_authenticate.domain.entities;
 
 import com.stefanini.cycle_authenticate.domain.value_objects.Email;
 import com.stefanini.cycle_authenticate.domain.value_objects.Password;
+import com.stefanini.cycle_authenticate.domain.value_objects.UserRole;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -18,6 +19,8 @@ public class User {
 
     private LocalDate dateOfBrith;
 
+    private UserRole userRole;
+
     public User() {
     }
 
@@ -27,14 +30,18 @@ public class User {
         this.email = email;
         this.password = password;
         this.dateOfBrith = dateOfBrith;
+        this.userRole = UserRole.USER;
     }
 
     public User(UUID id, String username, Email email, Password password, LocalDate dateOfBrith) {
+        this(username, email, password, dateOfBrith);
         this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.dateOfBrith = dateOfBrith;
+    }
+
+    public User(UUID id, String username, Email email, Password password, LocalDate dateOfBrith, UserRole userRole) {
+        this(username, email, password, dateOfBrith);
+        this.id = id;
+        this.userRole = userRole;
     }
 
     public UUID getId() {
@@ -73,18 +80,28 @@ public class User {
         return dateOfBrith;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     public void setDateOfBrith(LocalDate dateOfBrith) {
         this.dateOfBrith = dateOfBrith;
     }
 
+
+
     @Override
     public String toString() {
         return "User{" +
-               "id=" + id +
-               ", username='" + username + '\'' +
-               ", email=" + email +
-               ", password=" + password +
-               ", dateOfBrith=" + dateOfBrith +
-               '}';
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email=" + email +
+                ", password=" + password +
+                ", dateOfBrith=" + dateOfBrith +
+                '}';
     }
 }

@@ -55,12 +55,13 @@ public class AuthenticateController {
                             responseCode = "401"
                     ),
                     @ApiResponse(
-                            description = "email is invalid",
-                            content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
-                            responseCode = "400"
-                    ),
-                    @ApiResponse(
-                            description = "password must contain a special character, uppercase or lowercase and a maximum of 20 characters",
+                            description =
+                                    """
+                                    Requisição inválida (400) devido a diversos motivos, como:
+                                    - Campo inválido, e-mail já cadastrado, ou erro de formato.
+                                    - E-mail inválido.
+                                    - Senha fora do padrão (caracter especial, maiúscula/minúscula, máx 20 caracteres).
+                                    """,
                             content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "400"
                     ),
@@ -92,7 +93,12 @@ public class AuthenticateController {
                             responseCode = "404"
                     ),
                     @ApiResponse(
-                            description = "user not found",
+                            description = """
+                                    Motivos para este resultado:
+                                    - Senha invalida
+                                    - Requisição mal feita campos nulos ou vazios
+                                    - E-mail invalido(formato)
+                                    """,
                             content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "400"
                     ),

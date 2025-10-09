@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 public record AuthenticationBodyDTO(
         @Schema(defaultValue = "jhon_doe@example.com", example = "jhon_doe@example.com", required = true)
         @Email(message = "email invalid")
+        @NotBlank(message = "not blank email")
         String email,
         @Schema(defaultValue = "Jhon_doe2006@2025", example = "Jhon_doe2006@2025", required = true,
                 description = "password must contain a special character, uppercase or lowercase and a maximum of 20 characters",

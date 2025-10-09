@@ -4,7 +4,7 @@ import com.stefanini.cycle_authenticate.application.exceptions.InputInvalidExcep
 import com.stefanini.cycle_authenticate.application.exceptions.UserAlreadyExistsException;
 import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundException;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.UserServicePort;
-import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateUserDTO;
+import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateUserBodyDTO;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.SessionTokenDTO;
 import com.stefanini.cycle_authenticate.application.ports.outbound.repositories.UserRepositoryPort;
 import com.stefanini.cycle_authenticate.application.ports.outbound.security.EncryptionServicePort;
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserServicePort {
     }
 
     @Override
-    public User create(CreateUserDTO createUserDTO) throws EmailNotWithinStandards, PasswordNotWithinStandards, UserAlreadyExistsException {
+    public User create(CreateUserBodyDTO createUserDTO) throws EmailNotWithinStandards, PasswordNotWithinStandards, UserAlreadyExistsException {
         if (!Email.isValid(createUserDTO.email())) {
             throw new EmailNotWithinStandards();
         }

@@ -1,5 +1,6 @@
 package com.stefanini.cycle_authenticate;
 
+
 import org.springframework.boot.SpringApplication;
 
 public class TestCycleAuthenticateApplication {

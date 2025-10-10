@@ -46,4 +46,13 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
     public Optional<User> findById(UUID id) {
         return this.jpaUserModelRepository.findById(id).map(model-> this.userMapper.toDomain(model));
     }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        Optional<UserModel> userModel = this.jpaUserModelRepository.findByUsername(username);
+
+        if(userModel.isEmpty()) return Optional.empty();
+
+        return Optional.of(this.userMapper.toDomain(userModel.get()));
+    }
 }

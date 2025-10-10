@@ -14,6 +14,7 @@ import com.stefanini.cycle_authenticate.domain.exceptions.EmailNotWithinStandard
 import com.stefanini.cycle_authenticate.domain.exceptions.PasswordNotWithinStandards;
 import com.stefanini.cycle_authenticate.domain.value_objects.Email;
 import com.stefanini.cycle_authenticate.domain.value_objects.Password;
+import com.stefanini.cycle_authenticate.domain.value_objects.UserRole;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,13 +44,14 @@ public class UserServiceImpl implements UserServicePort {
         if (!Password.isValid(createUserDTO.password())) {
             throw new PasswordNotWithinStandards();
         }
-        Password password = new Password(this.encryptionServicePort.encode(createUserDTO.password()));
+        Password passwordEncode = new Password(this.encryptionServicePort.encode(createUserDTO.password()));
+
         Optional<User> userFind = this.userRepositoryPort.findByEmail(email);
         if (userFind.isPresent()) {
             throw new UserAlreadyExistsException();
         }
 
-        User user = new User(createUserDTO.username(), email, password, createUserDTO.dateOfBirth());
+        User user = new User(createUserDTO.username(), email, passwordEncode, createUserDTO.dateOfBirth(), UserRole.valueOf(createUserDTO.userRole()));
 
         return this.userRepositoryPort.save(user).orElseThrow(UserAlreadyExistsException::new);
     }
@@ -64,5 +66,10 @@ public class UserServiceImpl implements UserServicePort {
         }
 
         return this.sessionTokenService.generator(user.getId());
+    }
+
+    @Override
+    public User getProfile(String username) throws UserNotFoundException {
+        return this.userRepositoryPort.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 }

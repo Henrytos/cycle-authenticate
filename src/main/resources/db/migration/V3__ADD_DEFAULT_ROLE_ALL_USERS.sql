@@ -1,0 +1,1 @@
+UPDATE users SET user_role = 'ROLE_USER' WHERE user_role IS NULL;

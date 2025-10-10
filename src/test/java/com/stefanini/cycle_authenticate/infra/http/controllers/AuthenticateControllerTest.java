@@ -1,6 +1,7 @@
 package com.stefanini.cycle_authenticate.infra.http.controllers;
 
 import com.stefanini.cycle_authenticate.ContainersConfiguration;
+import com.stefanini.cycle_authenticate.domain.value_objects.UserRole;
 import com.stefanini.cycle_authenticate.infra.adapters.outbound.database.models.UserModel;
 import com.stefanini.cycle_authenticate.infra.adapters.outbound.database.repositories.JpaUserModelRepository;
 import jakarta.transaction.Transactional;
@@ -13,13 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@Testcontainers
 @Transactional
 public class AuthenticateControllerTest extends ContainersConfiguration {
 
@@ -38,20 +38,22 @@ public class AuthenticateControllerTest extends ContainersConfiguration {
         String dateString = LocalDate.now().minusYears(18).toString(); // Gera 'yyyy-MM-dd'
 
         String body = String.format("""
-            {
-                "username": "jhon_doe",
-                "email": "jhon_doe@example.com",
-                "password": "Jhondoe2006@2025",
-                "dateOfBirth": "%s"
-            }
-        """, dateString);
+                    {
+                        "username": "jhon_doe",
+                        "email": "jhon_doe@example.com",
+                        "password": "Jhondoe2006@2025",
+                        "dateOfBirth": "%s",
+                        "userRole": "%s"
+                    }
+                """, dateString, UserRole.ROLE_USER.getRole());
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users")
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isCreated());
-
-        Assertions.assertEquals(1, this.jpaUserModelRepository.findAll().size());
+        List<UserModel> users = this.jpaUserModelRepository.findAll();
+        Assertions.assertEquals(1, users.size());
+        Assertions.assertEquals(UserRole.ROLE_USER, users.getFirst().getUserRole());
 
     }
 
@@ -64,35 +66,36 @@ public class AuthenticateControllerTest extends ContainersConfiguration {
         String dateString = LocalDate.now().minusYears(18).toString(); // Gera 'yyyy-MM-dd'
 
         String body = String.format("""
-            {
-                "username": "jhon_doe",
-                "email": "jhon_doe@example.com",
-                "password": "Jhondoe2006@2025",
-                "dateOfBirth": "%s"
-            }
-        """, dateString);
+                    {
+                        "username": "jhon_doe",
+                        "email": "jhon_doe@example.com",
+                        "password": "Jhondoe2006@2025",
+                        "dateOfBirth": "%s",
+                        "userRole": "%s"
+                    }
+                """, dateString, UserRole.ROLE_USER.getRole());
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users")
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isUnauthorized());
-
-        Assertions.assertEquals(1, this.jpaUserModelRepository.findAll().size());
+        List<UserModel> users = this.jpaUserModelRepository.findAll();
+        Assertions.assertEquals(1, users.size());
     }
 
     @Test
     @DisplayName("should authenticate user")
     public void should_authenticate_user() throws Exception {
         String password = "Jhondoe2006@202";
-        UserModel userModel =new UserModel("jhon_doe", "jhon_doe@example.com", this.passwordEncoder.encode(password) , LocalDate.now().minusYears(18));
+        UserModel userModel = new UserModel("jhon_doe", "jhon_doe@example.com", this.passwordEncoder.encode(password), LocalDate.now().minusYears(18));
         userModel = this.jpaUserModelRepository.save(userModel);
 
         String body = String.format("""
-            {
-                "email": "%s",
-                "password": "%s"
-            }
-        """,userModel.getEmail(), password);
+                    {
+                        "email": "%s",
+                        "password": "%s"
+                    }
+                """, userModel.getEmail(), password);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users/auth")
@@ -106,14 +109,14 @@ public class AuthenticateControllerTest extends ContainersConfiguration {
     @DisplayName("should not authenticate if user not found")
     public void should_not_authenticate_if_user_not_found() throws Exception {
         String password = "Jhondoe2006@202";
-        UserModel userModel =new UserModel("jhon_doe", "jhon_doe@example.com", this.passwordEncoder.encode(password) , LocalDate.now().minusYears(18));
+        UserModel userModel = new UserModel("jhon_doe", "jhon_doe@example.com", this.passwordEncoder.encode(password), LocalDate.now().minusYears(18));
 
         String body = String.format("""
-            {
-                "email": "%s",
-                "password": "%s"
-            }
-        """,userModel.getEmail(), password);
+                    {
+                        "email": "%s",
+                        "password": "%s"
+                    }
+                """, userModel.getEmail(), password);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users/auth")
@@ -126,15 +129,15 @@ public class AuthenticateControllerTest extends ContainersConfiguration {
     @DisplayName("should not authenticate if password incorrect")
     public void should_not_authenticate_if_password_incorrect() throws Exception {
         String password = "Jhondoe2006@202";
-        UserModel userModel =new UserModel("jhon_doe", "jhon_doe@example.com", this.passwordEncoder.encode(password) , LocalDate.now().minusYears(18));
+        UserModel userModel = new UserModel("jhon_doe", "jhon_doe@example.com", this.passwordEncoder.encode(password), LocalDate.now().minusYears(18));
         userModel = this.jpaUserModelRepository.save(userModel);
 
         String body = String.format("""
-            {
-                "email": "%s",
-                "password": "%s"
-            }
-        """,userModel.getEmail(), password.concat("-incorrect"));
+                    {
+                        "email": "%s",
+                        "password": "%s"
+                    }
+                """, userModel.getEmail(), password.concat("-incorrect"));
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users/auth")

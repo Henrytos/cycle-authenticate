@@ -11,4 +11,5 @@ import com.stefanini.cycle_authenticate.domain.value_objects.Password;
 public interface UserServicePort {
     User create(CreateUserBodyDTO createUserDTO) throws UserNotFoundException;
     SessionTokenDTO authenticate(Email email, Password password) throws UserNotFoundException;
+    User getProfile(String username);
 }

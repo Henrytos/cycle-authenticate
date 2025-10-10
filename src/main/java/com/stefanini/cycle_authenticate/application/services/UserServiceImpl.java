@@ -67,4 +67,9 @@ public class UserServiceImpl implements UserServicePort {
 
         return this.sessionTokenService.generator(user.getId());
     }
+
+    @Override
+    public User getProfile(String username) {
+        return this.userRepositoryPort.findByUsername(username).orElse(null);
+    }
 }

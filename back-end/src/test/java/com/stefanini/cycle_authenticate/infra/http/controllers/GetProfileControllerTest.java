@@ -4,7 +4,6 @@ package com.stefanini.cycle_authenticate.infra.http.controllers;
 import com.stefanini.cycle_authenticate.ContainersConfiguration;
 import com.stefanini.cycle_authenticate.infra.adapters.outbound.database.models.UserModel;
 import com.stefanini.cycle_authenticate.infra.adapters.outbound.database.repositories.JpaUserModelRepository;
-import com.stefanini.cycle_authenticate.infra.adapters.outbound.database.repositories.UserRepositoryAdapter;
 import com.stefanini.cycle_authenticate.infra.adapters.outbound.security.SessionTokenServiceAdapter;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -19,9 +20,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@SpringBootTest( webEnvironment =  SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest( webEnvironment =  SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @Transactional
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class GetProfileControllerTest extends ContainersConfiguration {
 
     @Autowired

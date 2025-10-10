@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2c2fecb5-d202-42c4-a533-996d197a2330" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/cycle-authenticate.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HELP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/CycleAuthenticateApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/exceptions/InputInvalidException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/exceptions/InternalApplicationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/exceptions/UserAlreadyExistsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/exceptions/UserNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/ports/inbound/services/UserServicePort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/ports/inbound/services/dtos/CreateUserBodyDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/ports/inbound/services/dtos/SessionTokenDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/ports/inbound/services/dtos/ValueOfEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/ports/inbound/services/dtos/ValueOfEnumValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/ports/outbound/repositories/UserRepositoryPort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/ports/outbound/security/EncryptionServicePort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/ports/outbound/security/SessionTokenServicePort.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/application/services/UserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/domain/entities/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/domain/exceptions/EmailNotWithinStandards.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/domain/exceptions/PasswordNotWithinStandards.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/domain/value_objects/Email.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/domain/value_objects/Password.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/domain/value_objects/UserRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/adapters/inbound/services/UserModelDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/adapters/outbound/database/mappers/UserMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/adapters/outbound/database/models/UserModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/adapters/outbound/database/repositories/JpaUserModelRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/adapters/outbound/database/repositories/UserRepositoryAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/adapters/outbound/security/EncryptionServiceAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/adapters/outbound/security/SessionTokenResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/adapters/outbound/security/SessionTokenServiceAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/configs/ModelMapperConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/configs/http/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/configs/http/ResponseMessageDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/configs/security/SpringSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/configs/security/TokenFilterChain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/http/AuthenticateController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/http/GetProfileController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/http/dtos/AuthenticationBodyDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/http/presenters/CreateUserPresenter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/stefanini/cycle_authenticate/infra/http/presenters/GetProfilePresenter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V1__CREATE_TABLE_USERS.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V2__ADD_COLUMN_USER_ROLE.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V3__ADD_DEFAULT_ROLE_ALL_USERS.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V4__ADD_CONSTRAINT_DEFAULT_VALUE_ROLE.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V5__ALTER_COLUMN_USERNAME_TO_UNIQUE.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/stefanini/cycle_authenticate/ContainersConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/stefanini/cycle_authenticate/CycleAuthenticateApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/stefanini/cycle_authenticate/TestCycleAuthenticateApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/stefanini/cycle_authenticate/TestcontainersConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/stefanini/cycle_authenticate/application/services/UserServiceImplTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/stefanini/cycle_authenticate/infra/http/controllers/AuthenticateControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/stefanini/cycle_authenticate/infra/http/controllers/GetProfileControllerTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="33srtnIrXJvYpnRApc32UmW7Rk2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "dev",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hfarcaya\Documents\cycle-authenticate\back-end" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2c2fecb5-d202-42c4-a533-996d197a2330" name="Changes" comment="" />
+      <created>1760116841186</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760116841186</updated>
+    </task>
+    <servers />
+  </component>
+</project>

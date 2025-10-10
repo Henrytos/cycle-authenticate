@@ -14,15 +14,15 @@ public abstract class ContainersConfiguration {
   @Container
     protected static  final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest");
 
-  @BeforeAll
-  static void startContainer(){
-      postgreSQLContainer.start();
-  }
-
-  @AfterAll
-  static void stopContainer(){
-      postgreSQLContainer.stop();
-  }
+//  @BeforeAll
+//  static void startContainer(){
+//      postgreSQLContainer.start();
+//  }
+//
+//  @AfterAll
+//  static void stopContainer(){
+//      postgreSQLContainer.stop();
+//  }
 
   @DynamicPropertySource
     static void configureProperties(

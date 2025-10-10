@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserServicePort {
     }
 
     @Override
-    public User getProfile(String username) {
-        return this.userRepositoryPort.findByUsername(username).orElse(null);
+    public User getProfile(String username) throws UserNotFoundException {
+        return this.userRepositoryPort.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 }

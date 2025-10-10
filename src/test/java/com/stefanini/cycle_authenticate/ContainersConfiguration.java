@@ -15,7 +15,7 @@ public abstract class ContainersConfiguration {
     protected static  final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest");
 
   @BeforeAll
-  static void upContainer(){
+  static void startContainer(){
       postgreSQLContainer.start();
   }
 
@@ -28,10 +28,6 @@ public abstract class ContainersConfiguration {
     static void configureProperties(
             DynamicPropertyRegistry registry
   ){
-      System.out.println(postgreSQLContainer.getUsername());
-      System.out.println(postgreSQLContainer.getPassword());
-      System.out.println(postgreSQLContainer.getJdbcUrl());
-
       registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
       registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
       registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);

@@ -1,6 +1,6 @@
 package com.stefanini.cycle_authenticate.application.exceptions;
 
-public class UserNotFoundException extends Exception{
+public class UserNotFoundException extends RuntimeException{
     private int status = 404;
 
     public UserNotFoundException(){

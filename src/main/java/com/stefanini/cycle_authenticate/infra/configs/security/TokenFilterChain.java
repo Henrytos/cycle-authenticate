@@ -49,7 +49,7 @@ public class TokenFilterChain extends OncePerRequestFilter {
 
             if (user.isEmpty()) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                filterChain.doFilter(request, response);
+                return;
             }
 
             UserModel userModel = this.userMapper.toModel(user.get());

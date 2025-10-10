@@ -1,5 +1,6 @@
 package com.stefanini.cycle_authenticate.application.services;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.stefanini.cycle_authenticate.application.exceptions.InputInvalidException;
 import com.stefanini.cycle_authenticate.application.exceptions.UserAlreadyExistsException;
 import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundException;
@@ -43,7 +44,7 @@ public class UserServiceImplTest {
     private EncryptionServicePort encryptionServicePort;
 
     @Mock
-    private SessionTokenServicePort sessionTokenService;
+    private SessionTokenServicePort<DecodedJWT> sessionTokenService;
 
     @Nested
     @DisplayName("success tests")
@@ -89,6 +90,17 @@ public class UserServiceImplTest {
                     .isGreaterThanOrEqualTo(9)
                     .isLessThanOrEqualTo(10);
 
+        }
+
+        @Test
+        @DisplayName("should be given profile user")
+        public void should_be_given_profile_user(){
+
+            String username = "jhon_doe";
+
+            Mockito.when(userRepositoryPort.findByUsername(Mockito.eq(username))).thenReturn(Optional.of(new User(username, new Email("jho_doe@gmail.com"), new Password("Jhondoe2006@2025"), LocalDate.now().plusYears(18))));
+            User user = userService.getProfile(username);
+            Assertions.assertEquals(username, user.getUsername());
         }
     }
 
@@ -149,6 +161,18 @@ public class UserServiceImplTest {
 
             Assertions.assertThrows(InputInvalidException.class,()->{
                 userService.authenticate(email, password);
+            });
+        }
+
+        @Test
+        @DisplayName("should be not given profile user if not exists")
+        public void should_be_not_given_profile_user_if_not_exists(){
+
+            String username = "jhon_doe";
+
+            Mockito.when(userRepositoryPort.findByUsername(Mockito.eq(username))).thenReturn(Optional.empty());
+            Assertions.assertThrows(UserNotFoundException.class, ()->{
+                userService.getProfile(username);
             });
         }
     }

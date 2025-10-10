@@ -30,7 +30,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.dateOfBrith = dateOfBrith;
-        this.userRole = UserRole.USER;
+        this.userRole = UserRole.ROLE_USER;
     }
 
     public User(String username, Email email, Password password, LocalDate dateOfBrith, UserRole userRole) {

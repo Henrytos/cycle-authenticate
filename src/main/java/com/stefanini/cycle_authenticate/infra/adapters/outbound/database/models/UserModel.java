@@ -40,7 +40,7 @@ public class UserModel implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
-    private UserRole userRole;
+    private UserRole userRole = UserRole.ROLE_USER;
 
     public UserModel(String username, String email, String password, LocalDate dateOfBrith) {
         this.username = username;

@@ -52,7 +52,7 @@ public class UserServiceImplTest {
         @Test
         @DisplayName("should given an create new user")
         public void should_given_an_create_new_user() {
-            CreateUserBodyDTO createUserDTO = new CreateUserBodyDTO("jhon_doe", "jhondoe@example.com", "JhonDoe2006@2025", LocalDate.now().minusYears(18), UserRole.USER.toString());
+            CreateUserBodyDTO createUserDTO = new CreateUserBodyDTO("jhon_doe", "jhondoe@example.com", "JhonDoe2006@2025", LocalDate.now().minusYears(18), UserRole.ROLE_USER.getRole());
             Mockito.when(userRepositoryPort.findByEmail(Mockito.any())).thenReturn(Optional.empty());
 
             User userSaved = new User(UUID.randomUUID(), createUserDTO.username(), new Email(createUserDTO.email()), new Password(createUserDTO.password()), createUserDTO.dateOfBirth());
@@ -99,7 +99,7 @@ public class UserServiceImplTest {
         @Test
         @DisplayName("should give an error with an invalid email address")
         public void should_give_an_error_with_an_invalid_email_address() {
-            CreateUserBodyDTO createUserDTO = new CreateUserBodyDTO("jhon_doe", "jhon", "JhonDoe2006@2025", LocalDate.now().minusYears(18), UserRole.USER.toString());
+            CreateUserBodyDTO createUserDTO = new CreateUserBodyDTO("jhon_doe", "jhon", "JhonDoe2006@2025", LocalDate.now().minusYears(18), UserRole.ROLE_USER.getRole());
             Assertions.assertThrows(EmailNotWithinStandards.class, () -> {
                 userService.create(createUserDTO);
             });
@@ -108,7 +108,7 @@ public class UserServiceImplTest {
         @Test
         @DisplayName("should give an error with a password that doesn't meet the standards")
         public void should_give_an_error_with_a_password_that_does_meet_the_standards() {
-            CreateUserBodyDTO createUserDTO = new CreateUserBodyDTO("jhon_doe", "jhondoe@example.com", "123456", LocalDate.now().minusYears(18), UserRole.USER.toString());
+            CreateUserBodyDTO createUserDTO = new CreateUserBodyDTO("jhon_doe", "jhondoe@example.com", "123456", LocalDate.now().minusYears(18), UserRole.ROLE_USER.getRole());
             Assertions.assertThrows(PasswordNotWithinStandards.class, () -> {
                 userService.create(createUserDTO);
             });
@@ -117,7 +117,7 @@ public class UserServiceImplTest {
         @Test
         @DisplayName("should give an error if a user with this email address already exists")
         public void should_give_an_error_if_a_user_with_this_email_address_already_exists() {
-            CreateUserBodyDTO createUserDTO = new CreateUserBodyDTO("jhon_doe", "jhondoe@example.com", "JhonDoe2006@2025", LocalDate.now().minusYears(18), UserRole.USER.toString());
+            CreateUserBodyDTO createUserDTO = new CreateUserBodyDTO("jhon_doe", "jhondoe@example.com", "JhonDoe2006@2025", LocalDate.now().minusYears(18), UserRole.ROLE_USER.getRole());
             Mockito.when(userRepositoryPort.findByEmail(Mockito.any())).thenReturn(Optional.of(new User()));
 
             Assertions.assertThrows(UserAlreadyExistsException.class, () -> {

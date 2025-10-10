@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -42,7 +43,8 @@ public class AuthenticateControllerTest extends ContainersConfiguration {
                 "username": "jhon_doe",
                 "email": "jhon_doe@example.com",
                 "password": "Jhondoe2006@2025",
-                "dateOfBirth": "%s"
+                "dateOfBirth": "%s",
+                "userRole": "USER"
             }
         """, dateString);
         mockMvc.perform(
@@ -68,7 +70,8 @@ public class AuthenticateControllerTest extends ContainersConfiguration {
                 "username": "jhon_doe",
                 "email": "jhon_doe@example.com",
                 "password": "Jhondoe2006@2025",
-                "dateOfBirth": "%s"
+                "dateOfBirth": "%s",
+                "userRole": "USER"
             }
         """, dateString);
         mockMvc.perform(
@@ -76,8 +79,9 @@ public class AuthenticateControllerTest extends ContainersConfiguration {
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isUnauthorized());
-
-        Assertions.assertEquals(1, this.jpaUserModelRepository.findAll().size());
+        List<UserModel> users = this.jpaUserModelRepository.findAll();
+        Assertions.assertEquals(1, users.size());
+        System.out.println(users);
     }
 
     @Test

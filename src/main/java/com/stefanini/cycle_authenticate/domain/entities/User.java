@@ -33,6 +33,15 @@ public class User {
         this.userRole = UserRole.USER;
     }
 
+    public User(String username, Email email, Password password, LocalDate dateOfBrith, UserRole userRole) {
+        this.id = null;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.dateOfBrith = dateOfBrith;
+        this.userRole = userRole;
+    }
+
     public User(UUID id, String username, Email email, Password password, LocalDate dateOfBrith) {
         this(username, email, password, dateOfBrith);
         this.id = id;

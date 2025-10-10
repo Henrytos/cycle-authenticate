@@ -1,14 +1,18 @@
 package com.stefanini.cycle_authenticate.infra.configs.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SpringSecurityConfig {
@@ -21,7 +25,7 @@ public class SpringSecurityConfig {
             "/swagger-ui.html"
     };
 
-    private final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
+    public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/users",
             "/users/auth"
     };
@@ -33,6 +37,9 @@ public class SpringSecurityConfig {
     private final String[] ENDPOINTS_ADMIN = {
         "/admin/**"
     };
+
+    @Autowired
+    TokenFilterChain tokenFilterChain;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -47,9 +54,14 @@ public class SpringSecurityConfig {
                             .requestMatchers(this.ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
                             .requestMatchers(this.ENDPOINTS_ADMIN).hasRole("ADMIN")
                             .anyRequest().denyAll();
-                });
+                }).addFilterBefore(tokenFilterChain, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean

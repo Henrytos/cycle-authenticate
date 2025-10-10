@@ -4,9 +4,8 @@ import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.
 
 import java.util.UUID;
 
-public interface SessionTokenServicePort {
+public interface SessionTokenServicePort<T> {
 
     SessionTokenDTO generator(UUID identifier);
-    Boolean validate(String token);
-
+    T validate(String token);
 }

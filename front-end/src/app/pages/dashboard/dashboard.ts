@@ -17,7 +17,7 @@ export interface TransactionI {
 
 @Component({
   selector: 'app-dashboard',
-  imports: [RouterLink, Title, Header, LucideAngularModule, ListTransaction],
+  imports: [Title, Header, LucideAngularModule, ListTransaction],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   standalone: true

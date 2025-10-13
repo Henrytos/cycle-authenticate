@@ -6,6 +6,7 @@
   box-sizing: border-box;
   font-family: $font-style;
 }
+
 main {
   width: 100%;
   display: flex;
@@ -19,7 +20,7 @@ main {
     padding: 20px 24px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    height: 100%;
 
     .grid {
       width: 100%;
@@ -27,16 +28,115 @@ main {
 
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 40px;
+      gap: 32px;
 
       .charts-content {
         grid-column-start: 1;
         grid-column-end: 9;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(12, 1fr);
+        gap: 24px;
+
+        .grid-column-1 {
+          grid-column: span 1;
+        }
+
+        .grid-column-2 {
+          grid-column: span 2;
+        }
+        .grid-column-3 {
+          grid-column: span 3;
+        }
+
+        .grid-row-2 {
+          grid-row: span 2;
+        }
+        .grid-row-3 {
+          grid-row: span 3;
+        }
+        .grid-row-4 {
+          grid-row: span 4;
+        }
+        .grid-row-5 {
+          grid-row: span 5;
+        }
+        .grid-row-6 {
+          grid-row: span 6;
+        }
+        .grid-row-8 {
+          grid-row: span 8;
+        }
+
+        .chart-sale {
+          background-color: $dark-green;
+          .icon {
+            width: min-content;
+            padding: 10px;
+          }
+        }
+
+        .char-investment {
+          background-color: rgba(255, 255, 255, 0.03);
+
+          .icon {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: $white;
+          }
+        }
+        .char-up {
+          .icon {
+            background-color: $dark-green;
+            color: $green;
+          }
+        }
+
+        .char-down {
+          .icon {
+            background-color: rgba(246, 53, 46, 0.08);
+            color: $red;
+          }
+        }
       }
       app-list-transaction {
         grid-column-start: 9;
         grid-column-end: 13;
+        height: 100%;
       }
     }
+
+    @media (min-width: 1200px) {
+      padding: 24px 10%;
+    }
+  }
+}
+
+.card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .top {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 8px;
+
+    .icon {
+      width: min-content;
+      padding: 10px;
+    }
+
+    h4 {
+      font-size: $text-normal;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+  .bottom {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 }

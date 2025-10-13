@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterOutlet, ReactiveFormsModule],
+  imports: [RouterOutlet, ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
@@ -26,10 +26,19 @@ export class Register {
   }
 
   public loginFormSubmit() {
-    const { email, password } = this.registerForm.value;
-
+    const { username,
+      email,
+      password,
+      dateOfBirth } = this.registerForm.value;
+    console.log({
+      username,
+      email,
+      password,
+      dateOfBirth
+    })
     if (this.registerForm.valid)
       this.registerForm.reset()
+
 
   }
 }

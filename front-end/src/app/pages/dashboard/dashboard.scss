@@ -98,6 +98,10 @@ main {
             color: $red;
           }
         }
+
+        .chart-pie canvas {
+          width: 10px;
+        }
       }
       app-list-transaction {
         grid-column-start: 9;

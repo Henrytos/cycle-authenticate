@@ -1,0 +1,34 @@
+<div class="transaction">
+
+  <div class="left">
+    <div class="icon-transaction">
+      @if(transaction.typeMethod=="credito"){
+      <lucide-icon name="credit-card"></lucide-icon>
+      } @else if (transaction.typeMethod=="boleto") {
+      <lucide-icon name="tally-4"></lucide-icon>
+      } @else if (transaction.typeMethod == "pix") {
+      <lucide-icon name="badge-dollar-sign"></lucide-icon>
+      }
+    </div>
+
+    <div class="info-transaction">
+      <h4>
+        {{transaction.title}}
+      </h4>
+
+      <p class="date-transaction">
+        {{transaction.date}}
+      </p>
+    </div>
+  </div>
+
+  <span class="value-transaction {{transaction.type}}">
+    @if(transaction.type=="entry"){
+    +
+    } @else{
+    -
+    }
+    {{transaction.value}}
+
+  </span>
+</div>

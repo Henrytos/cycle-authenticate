@@ -9,8 +9,34 @@
 main {
   width: 100%;
   display: flex;
+  flex-direction: column;
   height: 100vh;
   max-height: 100vh;
   background-color: $bg-primary;
   color: $white;
+
+  section {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .grid {
+      width: 100%;
+      height: 100%;
+
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 40px;
+
+      .charts-content {
+        grid-column-start: 1;
+        grid-column-end: 9;
+      }
+      app-list-transaction {
+        grid-column-start: 9;
+        grid-column-end: 13;
+      }
+    }
+  }
 }

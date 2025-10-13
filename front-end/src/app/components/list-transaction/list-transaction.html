@@ -1,0 +1,20 @@
+<div class="card list-trasactions">
+  <div class="top">
+    <h2>
+      Transações
+    </h2>
+
+    <a routerLink="/transactions">
+      Ver Mais
+    </a>
+  </div>
+
+  <span class="line">
+  </span>
+  <div class="transactions">
+    @for (transaction of transactions; track transaction.id) {
+    <app-transaction [transaction]="transaction"></app-transaction>
+    }
+  </div>
+
+</div>

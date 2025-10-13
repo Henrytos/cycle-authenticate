@@ -1,0 +1,38 @@
+@use '../../variables.scss' as *;
+
+.transaction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .icon-transaction {
+      background-color: rgba(255, 255, 255, 0.03);
+      color: $light-gray;
+      padding: 10px;
+      border-radius: 10.67px;
+    }
+
+    .info-transaction {
+      .date-transaction {
+        color: $gray;
+        font-size: $text-sm;
+      }
+    }
+  }
+  .value-transaction {
+    font-weight: $font-bold;
+
+    &.entry {
+      color: $green;
+    }
+
+    &.spent {
+      color: $red;
+    }
+  }
+}

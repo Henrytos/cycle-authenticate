@@ -1,0 +1,39 @@
+<main>
+
+  <div class="content-form">
+    <img src="/logo.svg" alt="logo">
+
+    <h2>
+      Bem-vindo
+    </h2>
+    <p>A Finance AI é uma plataforma de gestão financeira que utiliza IA para monitorar suas movimentações, e oferecer
+      insights
+      personalizados, facilitando o controle do seu orçamento.</p>
+
+
+    <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" [noValidate]="true">
+
+      <div class="form-control">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" formControlName="email">
+      </div>
+
+      <div class="form-control">
+        <label for="password">Senha:</label>
+        <input type="password" name="password" id="password" formControlName="password">
+      </div>
+
+      <button>
+        Entrar
+      </button>
+    </form>
+
+  </div>
+
+  <div class="content-bg">
+    <img src="/bg-login.png" alt="backgroun application overview">
+  </div>
+
+</main>
+
+<router-outlet />

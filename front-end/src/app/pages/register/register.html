@@ -8,11 +8,15 @@
     </h2>
     <p>A Finance AI é uma plataforma de gestão financeira que utiliza IA para monitorar suas movimentações, e oferecer
       insights
-      personalizados, facilitando o controle do seu orçamento.
-    </p>
+      personalizados, facilitando o controle do seu orçamento.</p>
 
 
-    <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" [noValidate]="true">
+    <form [formGroup]="registerForm" (ngSubmit)="loginFormSubmit()" [noValidate]="true">
+
+      <div class="form-control">
+        <label for="username">Nome de usuario:</label>
+        <input type="username" name="username" id="username" formControlName="username">
+      </div>
 
       <div class="form-control">
         <label for="email">Email:</label>
@@ -24,14 +28,15 @@
         <input type="password" name="password" id="password" formControlName="password">
       </div>
 
+      <div class="form-control">
+        <label for="dateOfBirth">Data de nascimento:</label>
+        <input type="date" name="dateOfBirth" id="dateOfBirth" formControlName="dateOfBirth">
+      </div>
+
       <button>
         Entrar
       </button>
     </form>
-
-    <p class="text">
-      Caso não tenha uma conta , <a routerLink="/register">Registre-se</a>
-    </p>
 
   </div>
 

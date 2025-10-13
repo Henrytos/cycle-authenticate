@@ -67,6 +67,12 @@ main {
           color: $gray;
           padding: 10px 16px;
           font-size: $text-sm;
+
+          transition: 0.2s all;
+          &:hover,
+          &:focus {
+            border: 1px solid $green;
+          }
         }
       }
 
@@ -84,6 +90,27 @@ main {
         text-align: center;
 
         border: 1px solid $light-gray;
+
+        transition: 0.2s all;
+        &:hover {
+          border: 1px solid $green;
+          background-color: $green;
+        }
+      }
+    }
+
+    .text {
+      margin-top: 8px;
+      font-size: $text-sm;
+      font-weight: $font-light;
+
+      a {
+        color: $white;
+
+        transition: 0.1s all;
+        &:hover {
+          color: $green;
+        }
       }
     }
   }

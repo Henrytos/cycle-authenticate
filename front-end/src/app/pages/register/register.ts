@@ -3,19 +3,23 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Title } from "../../components/title/title";
 import { Logo } from "../../components/logo/logo";
+import { CreateAccountService } from '../../services/create-account-service';
+import { toast, NgxSonnerToaster } from 'ngx-sonner';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterOutlet, ReactiveFormsModule, RouterLink, Title, Logo],
+  imports: [RouterOutlet, ReactiveFormsModule, RouterLink, Title, Logo, NgxSonnerToaster],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
 export class Register {
   registerForm: FormGroup;
+  protected readonly toast = toast;
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private createAccountService: CreateAccountService
   ) {
 
     this.registerForm = formBuilder.group(
@@ -33,15 +37,23 @@ export class Register {
       email,
       password,
       dateOfBirth } = this.registerForm.value;
-    console.log({
-      username,
-      email,
-      password,
-      dateOfBirth
-    })
+
     if (this.registerForm.valid) {
-      this.registerForm.reset()
-      this.router.navigate(['/login'])
+      this.createAccountService.execute({
+        username,
+        email,
+        password,
+        dateOfBirth
+      }).subscribe({
+        next() {
+          toast.success("Sucesso em cadastrar novo usuario")
+        },
+        error(err) {
+          const { message } = err.error;
+
+          toast.error(message)
+        }
+      })
 
     }
 

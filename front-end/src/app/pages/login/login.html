@@ -14,12 +14,20 @@
     <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" [noValidate]="true">
 
       <div class="form-control">
-        <label for="email">Email:</label>
+        <label for="email">Email:
+          @if(loginForm.get("email")?.errors && loginForm.get("email")?.touched){
+          <span class="error-message">(Preencha este campo)</span>
+          }
+        </label>
         <input type="email" name="email" id="email" formControlName="email">
       </div>
 
       <div class="form-control">
-        <label for="password">Senha:</label>
+        <label for="password">Senha:
+          @if(loginForm.get("password")?.errors && loginForm.get("password")?.touched){
+          <span class="error-message">(Preencha este campo)</span>
+          }
+        </label>
         <input type="password" name="password" id="password" formControlName="password">
       </div>
 

@@ -1,0 +1,64 @@
+@use '../../variables.scss' as *;
+
+* {
+  color: $white !important;
+}
+
+mat-dialog-content {
+  width: 500px !important;
+}
+
+h2 {
+  font-size: $text-2xl !important;
+}
+
+form {
+  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .form-control {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      font-weight: $font-bold;
+      font-size: $text-sm;
+      color: $white !important;
+    }
+
+    input,
+    select {
+      padding: 11px 16px;
+      background-color: #121316;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  }
+}
+
+mat-dialog-actions {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+
+  button {
+    padding: 8px 16px !important;
+    border-radius: 10px !important;
+    font-weight: $font-bold !important;
+    cursor: pointer !important;
+    width: 100%;
+  }
+
+  .add-transaction {
+    background-color: $green !important;
+    color: $white !important;
+  }
+
+  .cancel-transaction {
+    background-color: $red !important;
+    color: $white !important;
+  }
+}

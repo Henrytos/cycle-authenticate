@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { Title } from "../../components/title/title";
 import { Header } from "../../components/header/header";
 import { LucideAngularModule } from 'lucide-angular';
@@ -11,7 +11,9 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogTitle } from '@angular/material/dialog';
+import { CreateNewTransactionDialogForm } from '../../components/create-new-transaction-dialog-form/create-new-transaction-dialog-form';
 
 export interface TransactionI {
   id: number,
@@ -24,7 +26,7 @@ export interface TransactionI {
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Title, Header, LucideAngularModule, ListTransaction],
+  imports: [Title, Header, LucideAngularModule, ListTransaction, MatDialogModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   standalone: true
@@ -54,9 +56,16 @@ export class Dashboard implements OnInit, AfterViewInit {
     }
   ];
 
+  readonly dialog = inject(MatDialog);
+
+
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
 
   ngOnInit(): void {
+  }
+
+  openDialog() {
+    this.dialog.open(CreateNewTransactionDialogForm);
   }
 
   ngAfterViewInit(): void {
@@ -95,3 +104,5 @@ export class Dashboard implements OnInit, AfterViewInit {
     }
   }
 }
+
+

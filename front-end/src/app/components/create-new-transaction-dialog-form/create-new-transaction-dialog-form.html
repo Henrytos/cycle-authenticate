@@ -19,7 +19,8 @@
       </label>
 
       <!-- TODO: ADICIONAR MARCARA -->
-      <input type="number" name="value" id="value" formControlName="valueInReal">
+      <input type="text" name="value" id="value" formControlName="valueInReal" mask="separator.2" thousandSeparator="."
+        decimalMarker="," prefix="R$ ">
     </div>
 
 
@@ -32,7 +33,7 @@
       <select name="typeTransaction" id="typeTransaction" formControlName="typeTransaction">
         <option value="" disabled>Secione</option>
         <option value="deposito">Deposito</option>
-        <option value="retirado">Retirado</option>
+        <option value="gasto">Gasto</option>
       </select>
     </div>
 

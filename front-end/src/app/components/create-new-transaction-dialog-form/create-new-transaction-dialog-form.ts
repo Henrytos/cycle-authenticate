@@ -1,17 +1,18 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from "@angular/material/dialog";
+import { NgxMaskDirective } from "ngx-mask";
 
 
 @Component({
   selector: 'dialog-elements-example-dialog',
   templateUrl: 'create-new-transaction-dialog-form.html',
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule, ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule, ɵInternalFormsSharedModule, ReactiveFormsModule, NgxMaskDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: 'create-new-transaction-dialog-form.scss'
 })
-export class CreateNewTransactionDialogForm {
+export class CreateNewTransactionDialogForm implements OnInit {
 
 
   createTransactionForm: FormGroup;
@@ -23,6 +24,12 @@ export class CreateNewTransactionDialogForm {
       methodPayment: ['', [Validators.required]],
       dateOfPayment: ['', [Validators.required]],
     })
+  }
+
+  ngOnInit(): void {
+    const date = new Date();
+    const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    this.createTransactionForm.get("dateOfPayment")?.setValue(currentDate)
   }
 
 

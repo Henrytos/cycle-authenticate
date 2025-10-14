@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-root',

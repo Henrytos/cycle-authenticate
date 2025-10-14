@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { catchError, tap } from 'rxjs';
 
 interface AuthenticateUserServiceRequest {
   email: string,
@@ -31,6 +31,21 @@ export class AuthenticateUserService {
 
   setToken(token: string) {
     localStorage.setItem("Authorization", `Bearer ${token}`)
+  }
+
+  isLoggedIn() {
+
+    const token = localStorage.getItem("Authorization")
+
+    if (token == "" || !token?.includes("Bearer")) {
+      return false;
+    }
+
+    return true;
+  }
+
+  logout() {
+    localStorage.removeItem("Authorization")
   }
 
 }

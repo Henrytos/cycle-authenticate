@@ -29,16 +29,6 @@ export class CreateAccountService {
 
     return this.httpClient.post<CreateAccountServiceRespons>("api/users", {
       username, email, password, dateOfBirth, userRole: "ROLE_USER"
-    }).pipe(
-      tap((response) => {
-        console.log("deu tudo certo")
-      }),
-      catchError(err => {
-        const { message, statusCode } = err.error;
-
-
-        return throwError(err);
-      })
-    )
+    })
   }
 }

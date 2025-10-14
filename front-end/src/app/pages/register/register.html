@@ -12,22 +12,38 @@
     <form [formGroup]="registerForm" (ngSubmit)="loginFormSubmit()" [noValidate]="true">
 
       <div class="form-control">
-        <label for="username">Nome De Usuario:</label>
+        <label for="username">Nome De Usuario
+          @if(registerForm.get("username")?.errors && registerForm.get("username")?.touched){
+          <span class="error-message">(Preencha este campo)</span>
+          }
+          :</label>
         <input type="username" name="username" id="username" formControlName="username">
       </div>
 
       <div class="form-control">
-        <label for="email">Email:</label>
+        <label for="email">Email:
+          @if(registerForm.get("email")?.errors && registerForm.get("email")?.touched){
+          <span class="error-message">(Preencha este campo)</span>
+          }
+        </label>
         <input type="email" name="email" id="email" formControlName="email">
       </div>
 
       <div class="form-control">
-        <label for="password">Senha:</label>
+        <label for="password">Senha:
+          @if(registerForm.get("password")?.errors && registerForm.get("password")?.touched){
+          <span class="error-message">(Preencha este campo)</span>
+          }
+        </label>
         <input type="password" name="password" id="password" formControlName="password">
       </div>
 
       <div class="form-control">
-        <label for="dateOfBirth">Data De Nascimento:</label>
+        <label for="dateOfBirth">Data De Nascimento:
+          @if(registerForm.get("dateOfBirth")?.errors && registerForm.get("dateOfBirth")?.touched){
+          <span class="error-message">(Preencha este campo)</span>
+          }
+        </label>
         <input type="date" name="dateOfBirth" id="dateOfBirth" formControlName="dateOfBirth">
       </div>
 
@@ -47,5 +63,4 @@
   </div>
 
 </main>
-<ngx-sonner-toaster />
 <router-outlet />

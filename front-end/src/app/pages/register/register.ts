@@ -4,11 +4,12 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Title } from "../../components/title/title";
 import { Logo } from "../../components/logo/logo";
 import { CreateAccountService } from '../../services/create-account-service';
-import { toast, NgxSonnerToaster } from 'ngx-sonner';
+import { toast } from 'ngx-sonner';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterOutlet, ReactiveFormsModule, RouterLink, Title, Logo, NgxSonnerToaster],
+  imports: [RouterOutlet, ReactiveFormsModule, RouterLink, Title, Logo],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
@@ -44,7 +45,11 @@ export class Register {
         email,
         password,
         dateOfBirth
-      }).subscribe({
+      }).pipe(
+        tap(() => {
+          this.router.navigate(["/login"])
+        })
+      ).subscribe({
         next() {
           toast.success("Sucesso em cadastrar novo usuario")
         },
@@ -55,7 +60,11 @@ export class Register {
         }
       })
 
+    } else {
+      this.toast.error("Erro no fomulario, porfavor preencha todos os campos")
     }
+
+    this.registerForm.markAllAsTouched()
 
   }
 }

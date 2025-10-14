@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
-import { NgxMaskDirective } from 'ngx-mask';
+import { NgxSonnerToaster } from 'ngx-sonner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LucideAngularModule],
+  imports: [RouterOutlet, LucideAngularModule, NgxSonnerToaster],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

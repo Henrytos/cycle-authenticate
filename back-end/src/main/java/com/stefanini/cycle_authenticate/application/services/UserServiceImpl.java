@@ -46,9 +46,16 @@ public class UserServiceImpl implements UserServicePort {
         }
         Password passwordEncode = new Password(this.encryptionServicePort.encode(createUserDTO.password()));
 
-        Optional<User> userFind = this.userRepositoryPort.findByEmail(email);
-        if (userFind.isPresent()) {
-            throw new UserAlreadyExistsException();
+        Optional<User> userFindUsername = this.userRepositoryPort.findByUsername(createUserDTO.username());
+
+        if (userFindUsername.isPresent()) {
+            throw new UserAlreadyExistsException("username/email já existe");
+        }
+
+        Optional<User> userFindEmail = this.userRepositoryPort.findByEmail(email);
+
+        if (userFindEmail.isPresent()) {
+            throw new UserAlreadyExistsException("username/email já existe");
         }
 
         User user = new User(createUserDTO.username(), email, passwordEncode, createUserDTO.dateOfBirth(), UserRole.valueOf(createUserDTO.userRole()));

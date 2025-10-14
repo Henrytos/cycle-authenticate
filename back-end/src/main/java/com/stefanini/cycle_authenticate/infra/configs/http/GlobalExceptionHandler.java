@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ResponseMessageDTO> handlerUserAlreadyExistsException(UserAlreadyExistsException e) {
-        return ResponseEntity.status(HttpStatus.valueOf(e.getStatusCode())).body(new ResponseMessageDTO(e.getMessage(), e.getStatusCode()));
+        return ResponseEntity.status(HttpStatus.valueOf(e.getStatus())).body(new ResponseMessageDTO(e.getMessage(), e.getStatus()));
     }
 
     @ExceptionHandler(UserNotFoundException.class)

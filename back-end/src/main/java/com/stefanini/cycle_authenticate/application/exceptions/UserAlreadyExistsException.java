@@ -17,11 +17,11 @@ public class UserAlreadyExistsException extends RuntimeException{
         this.status = status;
     }
 
-    public int getStatusCode() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatusCode(int status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }

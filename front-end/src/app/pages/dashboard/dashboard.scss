@@ -11,8 +11,8 @@ main {
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  max-height: 100vh;
+  min-height: 100vh;
+  height: auto;
   background-color: $bg-primary;
   color: $white;
 
@@ -38,36 +38,6 @@ main {
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(12, 1fr);
         gap: 24px;
-
-        .grid-column-1 {
-          grid-column: span 1;
-        }
-
-        .grid-column-2 {
-          grid-column: span 2;
-        }
-        .grid-column-3 {
-          grid-column: span 3;
-        }
-
-        .grid-row-2 {
-          grid-row: span 2;
-        }
-        .grid-row-3 {
-          grid-row: span 3;
-        }
-        .grid-row-4 {
-          grid-row: span 4;
-        }
-        .grid-row-5 {
-          grid-row: span 5;
-        }
-        .grid-row-6 {
-          grid-row: span 6;
-        }
-        .grid-row-8 {
-          grid-row: span 8;
-        }
 
         .chart-sale {
           background-color: $dark-green;
@@ -102,7 +72,53 @@ main {
         .chart-pie canvas {
           width: 10px;
         }
+
+        .chart-catories {
+          max-height: 100%;
+
+          .categories {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+
+            .category {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+
+              .top {
+                display: flex;
+                justify-content: space-between;
+                h3,
+                p {
+                  font-size: $text-normal;
+                  font-weight: 600;
+                }
+              }
+
+              .progress {
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0.03);
+                height: 12px;
+                display: block;
+                border-radius: 1000px;
+                .progress-target {
+                  background-color: $gray;
+                  width: 50%;
+                  height: inherit;
+                  border-radius: 1000px;
+                }
+              }
+              .bottom {
+                color: $gray;
+                font-size: $text-sm;
+              }
+            }
+          }
+        }
       }
+
       app-list-transaction {
         grid-column-start: 9;
         grid-column-end: 13;
@@ -111,6 +127,10 @@ main {
     }
 
     @media (min-width: 1200px) {
+      padding: 24px 5%;
+    }
+
+    @media (min-width: 1600px) {
       padding: 24px 10%;
     }
   }

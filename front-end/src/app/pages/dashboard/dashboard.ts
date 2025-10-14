@@ -32,6 +32,28 @@ export interface TransactionI {
 // Adiciona OnInit à implementação para consistência
 export class Dashboard implements OnInit, AfterViewInit {
 
+  spendingByCategory = [
+    {
+      id: 1,
+      type: "Moradia",
+      progress: 50,
+      value: 2500
+    },
+
+    {
+      id: 2,
+      type: "Alimentação",
+      progress: 40,
+      value: 1200
+    },
+    {
+      id: 3,
+      type: "Saúde",
+      progress: 30,
+      value: 320
+    }
+  ];
+
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
 
   ngOnInit(): void {

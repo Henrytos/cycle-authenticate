@@ -34,3 +34,59 @@ input:-webkit-autofill:active {
   padding: 10px;
   border-radius: 10.67px;
 }
+
+h2 {
+  font-size: $text-xlg;
+  font-weight: $font-bold;
+}
+
+h3 {
+  font-size: $text-lg;
+  font-weight: $font-bold;
+}
+
+h4 {
+  font-size: $text-normal;
+  font-weight: $font-bold;
+}
+
+h5 {
+  font-size: $text-sm;
+  font-weight: $font-bold;
+}
+
+.line {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.grid-column-1 {
+  grid-column: span 1;
+}
+
+.grid-column-2 {
+  grid-column: span 2;
+}
+.grid-column-3 {
+  grid-column: span 3;
+}
+
+.grid-row-2 {
+  grid-row: span 2;
+}
+.grid-row-3 {
+  grid-row: span 3;
+}
+.grid-row-4 {
+  grid-row: span 4;
+}
+.grid-row-5 {
+  grid-row: span 5;
+}
+.grid-row-6 {
+  grid-row: span 6;
+}
+.grid-row-8 {
+  grid-row: span 8;
+}

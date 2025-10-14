@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Title } from "../../components/title/title";
+import { Logo } from "../../components/logo/logo";
 
 @Component({
   selector: 'app-register',
-  imports: [RouterOutlet, ReactiveFormsModule, RouterLink],
+  imports: [RouterOutlet, ReactiveFormsModule, RouterLink, Title, Logo],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
@@ -12,7 +14,8 @@ export class Register {
   registerForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
 
     this.registerForm = formBuilder.group(
@@ -36,9 +39,11 @@ export class Register {
       password,
       dateOfBirth
     })
-    if (this.registerForm.valid)
+    if (this.registerForm.valid) {
       this.registerForm.reset()
+      this.router.navigate(['/login'])
 
+    }
 
   }
 }

@@ -1,6 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@use './app/variables.scss' as *;
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: $font-style;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  /* Altera para a cor de fundo do seu INPUT (ex: branco) */
+  box-shadow: 0 0 0 1000px $bg-primary inset !important;
+
+  /* Altera para a cor do texto desejada (ex: preto) */
+  -webkit-text-fill-color: $gray !important;
+
+  /* Remove a transição da cor de fundo (opcional) */
+  transition: none !important;
+}
+
+.card {
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+}
+
+.icon {
+  background-color: rgba(0, 0, 0, 1);
+  color: $light-gray;
+  padding: 10px;
+  border-radius: 10.67px;
 }

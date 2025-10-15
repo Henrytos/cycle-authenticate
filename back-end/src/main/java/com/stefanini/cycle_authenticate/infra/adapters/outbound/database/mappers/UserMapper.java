@@ -8,7 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper {
+public class UserMapper implements MapperI<User, UserModel> {
 
     private final ModelMapper modelMapper;
 
@@ -51,7 +51,7 @@ public class UserMapper {
         return this.modelMapper.map(userModel, User.class);
     }
 
-    public UserModel toModel(User user) {
+    public UserModel toInfra(User user) {
         if (user == null) {
             return null;
         }

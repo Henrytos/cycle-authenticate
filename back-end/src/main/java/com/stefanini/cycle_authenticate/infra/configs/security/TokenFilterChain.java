@@ -51,7 +51,7 @@ public class TokenFilterChain extends OncePerRequestFilter {
                 return;
             }
 
-            UserModel userModel = this.userMapper.toModel(user.get());
+            UserModel userModel = this.userMapper.toInfra(user.get());
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userModel.getUsername(), null, userModel.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

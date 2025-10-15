@@ -24,7 +24,7 @@ public class UserRepositoryAdapter implements UserRepositoryPort {
 
     @Override
     public Optional<User> save(User user) {
-        UserModel userModel = this.userMapper.toModel(user);
+        UserModel userModel = this.userMapper.toInfra(user);
 
         userModel = this.jpaUserModelRepository.save(userModel);
 

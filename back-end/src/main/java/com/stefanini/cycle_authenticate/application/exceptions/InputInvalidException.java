@@ -5,7 +5,7 @@ public class InputInvalidException extends RuntimeException{
     private int status = 400;
 
     public  InputInvalidException(){
-        super("Input Invalid Exception");
+        super("Entrada invalida");
     }
 
     public InputInvalidException(int status) {

@@ -22,13 +22,13 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserServicePort {
 
-    private UserRepositoryPort userRepositoryPort;
+    private final UserRepositoryPort userRepositoryPort;
 
-    private EncryptionServicePort encryptionServicePort;
+    private final EncryptionServicePort encryptionServicePort;
 
-    private SessionTokenServicePort sessionTokenService;
+    private final SessionTokenServicePort<Object> sessionTokenService;
 
-    public UserServiceImpl(UserRepositoryPort userRepositoryPort, EncryptionServicePort encryptionServicePort, SessionTokenServicePort sessionTokenService) {
+    public UserServiceImpl(UserRepositoryPort userRepositoryPort, EncryptionServicePort encryptionServicePort, SessionTokenServicePort<Object> sessionTokenService) {
         this.userRepositoryPort = userRepositoryPort;
         this.encryptionServicePort = encryptionServicePort;
         this.sessionTokenService = sessionTokenService;
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserServicePort {
         Boolean passwordMatch = this.encryptionServicePort.match(password.getValue(), user.getPassword().getValue());
 
         if (!passwordMatch) {
-            throw new InputInvalidException("email/password invalid");
+            throw new InputInvalidException("email/password invalido");
         }
 
         return this.sessionTokenService.generator(user.getId());

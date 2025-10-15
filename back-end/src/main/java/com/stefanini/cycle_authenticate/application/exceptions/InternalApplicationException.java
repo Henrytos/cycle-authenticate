@@ -4,7 +4,7 @@ public class InternalApplicationException extends RuntimeException {
     private int status = 500;
 
     public InternalApplicationException(){
-        super("internal server error");
+        super("Erro interno do servidor");
     }
 
     public InternalApplicationException(int status) {

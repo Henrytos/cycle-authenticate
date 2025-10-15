@@ -7,9 +7,11 @@ import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.
 import com.stefanini.cycle_authenticate.application.ports.outbound.repositories.TransactionRepositoryPort;
 import com.stefanini.cycle_authenticate.application.ports.outbound.repositories.UserRepositoryPort;
 import com.stefanini.cycle_authenticate.domain.entities.Transaction;
+import com.stefanini.cycle_authenticate.domain.value_objects.MethodPayment;
 import com.stefanini.cycle_authenticate.domain.value_objects.TypeTransaction;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,8 +28,16 @@ public class TransactionsServiceImpl implements TransactionsServicePort {
 
 
     @Override
-    public void addTransaction(CreateTransactionDTO createTransactionDTO) {
-        this.userRepositoryPort.findById(createTransactionDTO.senderId()).orElseThrow(UserNotFoundException::new);
+    public Transaction addTransaction(UUID senderId,CreateTransactionDTO createTransactionDTO) {
+        this.userRepositoryPort.findById(senderId).orElseThrow(UserNotFoundException::new);
+
+        Transaction transaction = new Transaction(
+                 senderId,  createTransactionDTO.title(), createTransactionDTO.value(),  TypeTransaction.valueOf(createTransactionDTO.typeTransaction()), MethodPayment.valueOf(createTransactionDTO.methodPayment()), createTransactionDTO.dateOfPayment()
+        );
+
+        transaction = this.transactionRepositoryPort.save(transaction);
+
+        return transaction;
     }
 
     @Override

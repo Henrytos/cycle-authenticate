@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface TransactionsServicePort {
 
-    void addTransaction(CreateTransactionDTO createTransactionDTO);
+    Transaction addTransaction(UUID senderId, CreateTransactionDTO createTransactionDTO);
     List<Transaction> findAllTransactionsBySenderId(UUID senderId);
     GetMetricsUserDTO getMetricsBySenderId(UUID senderId);
 

@@ -55,6 +55,8 @@ public class TokenFilterChain extends OncePerRequestFilter {
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userModel.getUsername(), null, userModel.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            request.setAttribute("userId", userModel.getId());
         }
 
         filterChain.doFilter(request, response);

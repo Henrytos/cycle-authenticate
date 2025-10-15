@@ -26,9 +26,9 @@ public class UserServiceImpl implements UserServicePort {
 
     private final EncryptionServicePort encryptionServicePort;
 
-    private final SessionTokenServicePort<Object> sessionTokenService;
+    private final SessionTokenServicePort sessionTokenService;
 
-    public UserServiceImpl(UserRepositoryPort userRepositoryPort, EncryptionServicePort encryptionServicePort, SessionTokenServicePort<Object> sessionTokenService) {
+    public UserServiceImpl(UserRepositoryPort userRepositoryPort, EncryptionServicePort encryptionServicePort, SessionTokenServicePort sessionTokenService) {
         this.userRepositoryPort = userRepositoryPort;
         this.encryptionServicePort = encryptionServicePort;
         this.sessionTokenService = sessionTokenService;

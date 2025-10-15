@@ -46,4 +46,17 @@ public class TransactionModel {
         this.methodPayment = methodPayment;
         this.dateOfPayment = dateOfPayment;
     }
+
+    @Override
+    public String toString() {
+        return "TransactionModel{" +
+                "id=" + id +
+                ", sender=" + sender +
+                ", title='" + title + '\'' +
+                ", value=" + value +
+                ", typeTransaction=" + typeTransaction +
+                ", methodPayment=" + methodPayment +
+                ", dateOfPayment=" + dateOfPayment +
+                '}';
+    }
 }

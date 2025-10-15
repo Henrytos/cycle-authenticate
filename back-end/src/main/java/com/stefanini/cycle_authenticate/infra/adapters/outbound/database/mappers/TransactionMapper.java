@@ -43,6 +43,7 @@ public class TransactionMapper implements MapperI<Transaction, TransactionModel>
         UUID senderId = (transactionModel.getSender() != null)
                 ? transactionModel.getSender().getId()
                 : null;
+
         return new Transaction(
                 transactionModel.getId(),
                 senderId,

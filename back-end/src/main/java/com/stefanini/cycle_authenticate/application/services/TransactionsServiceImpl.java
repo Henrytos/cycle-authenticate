@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +46,13 @@ public class TransactionsServiceImpl implements TransactionsServicePort {
         this.userRepositoryPort.findById(senderId).orElseThrow(UserNotFoundException::new);
 
         return this.transactionRepositoryPort.findAllByUserId(senderId);
+    }
+
+
+    @Override
+    public List<Transaction> findRecentTransactionsBySenderId(UUID senderId) {
+        this.userRepositoryPort.findById(senderId).orElseThrow(UserNotFoundException::new);
+        return this.transactionRepositoryPort.findRecentBySenderId(senderId);
     }
 
     @Override

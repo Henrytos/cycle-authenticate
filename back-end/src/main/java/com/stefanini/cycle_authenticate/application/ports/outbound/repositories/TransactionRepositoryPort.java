@@ -9,5 +9,6 @@ public interface TransactionRepositoryPort {
 
     List<Transaction> findAllByUserId(UUID userId);
     Transaction save(Transaction transaction);
+    List<Transaction> findRecentBySenderId(UUID senderId);
 
 }

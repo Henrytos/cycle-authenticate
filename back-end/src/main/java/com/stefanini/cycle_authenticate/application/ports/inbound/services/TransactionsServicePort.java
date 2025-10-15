@@ -12,6 +12,7 @@ public interface TransactionsServicePort {
 
     Transaction addTransaction(UUID senderId, CreateTransactionDTO createTransactionDTO);
     List<Transaction> findAllTransactionsBySenderId(UUID senderId);
+    List<Transaction> findRecentTransactionsBySenderId(UUID senderId);
     GetMetricsUserDTO getMetricsBySenderId(UUID senderId);
 
 }

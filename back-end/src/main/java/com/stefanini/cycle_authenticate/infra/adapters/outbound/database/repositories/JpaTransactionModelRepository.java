@@ -10,7 +10,9 @@ import java.util.UUID;
 
 public interface JpaTransactionModelRepository extends JpaRepository<TransactionModel, UUID> {
 
-    @Query("SELECT t FROM transactions t WHERE t.sender.id = :senderId")
+    @Query(value = "SELECT * FROM transactions t WHERE t.sender_id = :senderId ORDER BY t.date_of_payment DESC", nativeQuery = true)
     List<TransactionModel> findAllBySenderId(@Param("senderId") UUID senderId);
 
+    @Query(value = "SELECT * FROM transactions t WHERE t.sender_id = :senderId ORDER BY t.date_of_payment DESC LIMIT 8", nativeQuery = true)
+    List<TransactionModel> findAllBySenderRecent(@Param("senderId") UUID senderId);
 }

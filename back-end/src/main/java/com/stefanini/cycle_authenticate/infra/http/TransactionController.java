@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Tag(name = "transactions")
@@ -26,7 +27,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    @Operation(description = "Criação de nova transação", summary = "Rota Criação de nova transação do ususario")
+    @Operation(description = "Rota Criação de nova transação do ususario", summary = "Criação de nova transação")
     public ResponseEntity<Transaction> create(
             HttpServletRequest request,
             @Valid @RequestBody CreateTransactionDTO createTransactionBodyDTO
@@ -55,6 +56,27 @@ public class TransactionController {
         GetMetricsUserDTO getMetricsUserDTO = this.transactionsServicePort.getMetricsBySenderId(userId);
 
         return ResponseEntity.ok().body(getMetricsUserDTO);
+    }
+
+    @GetMapping("/recents")
+    public ResponseEntity<List<Transaction>> getRecents(
+            HttpServletRequest request
+    ){
+
+        UUID userId = UUID.fromString(request.getAttribute("userId").toString());
+        List<Transaction> transactions = this.transactionsServicePort.findRecentTransactionsBySenderId(userId);
+
+        return ResponseEntity.ok().body(transactions);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Transaction>> findALl(
+            HttpServletRequest request
+    ){
+        UUID userId = UUID.fromString(request.getAttribute("userId").toString());
+        List<Transaction> transactions = this.transactionsServicePort.findAllTransactionsBySenderId(userId);
+
+        return ResponseEntity.ok().body(transactions);
     }
 
 }

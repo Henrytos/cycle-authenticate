@@ -30,4 +30,11 @@ public class TransactionRepositoryAdapter implements TransactionRepositoryPort {
         TransactionModel transactionModel = this.jpaTransactionModelRepository.save(this.transactionMapper.toInfra(transaction));
         return this.transactionMapper.toDomain(transactionModel);
     }
+
+    @Override
+    public List<Transaction> findRecentBySenderId(UUID senderId) {
+        List<TransactionModel> transactionsModel = this.jpaTransactionModelRepository.findAllBySenderRecent(senderId);
+
+        return transactionsModel.stream().map(transactionMapper::toDomain).toList();
+    }
 }

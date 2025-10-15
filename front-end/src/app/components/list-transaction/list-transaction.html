@@ -12,7 +12,7 @@
   <span class="line">
   </span>
   <div class="transactions">
-    @for (transaction of transactions; track transaction.id) {
+    @for (transaction of transactions(); track transaction.id) {
     <app-transaction [transaction]="transaction"></app-transaction>
     }
   </div>

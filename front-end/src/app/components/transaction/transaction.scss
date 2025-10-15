@@ -27,11 +27,15 @@
   .value-transaction {
     font-weight: $font-bold;
 
-    &.entry {
+    &.DEPOSIT {
       color: $green;
     }
 
-    &.spent {
+    &.INVESTMENT {
+      color: $white;
+    }
+
+    &.SPENT {
       color: $red;
     }
   }

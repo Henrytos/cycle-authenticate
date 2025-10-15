@@ -55,6 +55,7 @@ export class CreateNewTransactionDialogForm implements OnInit {
           this.transactionStateService.notifyTransactionsUpdated(res)
         })
 
+        this.transactionStateService.loadTransactions()
       }, () => {
         this.toast.error("Transação Não Feita")
       });

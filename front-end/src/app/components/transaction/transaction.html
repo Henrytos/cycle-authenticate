@@ -2,11 +2,11 @@
 
   <div class="left">
     <div class="icon-transaction">
-      @if(transaction.typeMethod=="CREDIT"){
+      @if(transaction.methodPayment=="CREDIT"){
       <lucide-icon name="credit-card"></lucide-icon>
-      } @else if (transaction.typeMethod=="TICKET") {
+      } @else if (transaction.methodPayment=="TICKET") {
       <lucide-icon name="tally-4"></lucide-icon>
-      } @else if (transaction.typeMethod == "PIX") {
+      } @else if (transaction.methodPayment == "PIX") {
       <lucide-icon name="badge-dollar-sign"></lucide-icon>
       }
     </div>
@@ -17,18 +17,20 @@
       </h4>
 
       <p class="date-transaction">
-        {{transaction.date}}
+        {{transaction.dateOfPayment}}
       </p>
     </div>
   </div>
 
-  <span class="value-transaction {{transaction.type}}">
-    @if(transaction.type=="entry"){
+  <span class="value-transaction {{transaction.typeTransaction}}">
+    @if(transaction.typeTransaction=="DEPOSIT"){
     +
-    } @else{
+    } @else if(transaction.typeTransaction=="SPENT"){
     -
+    } @else{
+
     }
-    {{transaction.value}}
+    {{transaction.value | currency:'BRL'}}
 
   </span>
 </div>

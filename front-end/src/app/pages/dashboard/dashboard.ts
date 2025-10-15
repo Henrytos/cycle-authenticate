@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DEFAULT_CURRENCY_CODE, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Title } from "../../components/title/title";
 import { Header } from "../../components/header/header";
 import { LucideAngularModule } from 'lucide-angular';
@@ -11,27 +11,32 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogTitle } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateNewTransactionDialogForm } from '../../components/create-new-transaction-dialog-form/create-new-transaction-dialog-form';
 import { GetMetricsDashboardService, GetMetricsDashboardServiceResponse } from '../../services/get-metrics-dashboard-service';
 import { TransactionStateService } from '../../services/transaction-state-service';
+import { CurrencyPipe, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 export interface TransactionI {
-  id: number,
-  title: string,
-  date: string,
-  value: string,
-  type: "entry" | "spent",
-  typeMethod: "PIX" | "TICKET" | "CREDIT"
+  id: string
+  senderId: string
+  title: string
+  value: number
+  typeTransaction: "DEPOSIT" | "SPENT" | "INVESTMENT"
+  dateOfPayment: string
+  methodPayment: "PIX" | "TICKET" | "CREDIT"
 }
+
+registerLocaleData(localePt);
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Title, Header, LucideAngularModule, ListTransaction, MatDialogModule],
+  imports: [Title, Header, LucideAngularModule, ListTransaction, MatDialogModule, CurrencyPipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
-  standalone: true
+  standalone: true,
+  providers: [{ provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' }]
 })
 // Adiciona OnInit à implementação para consistência
 export class Dashboard implements OnInit {

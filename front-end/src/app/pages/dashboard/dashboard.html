@@ -27,7 +27,7 @@
 
           <div class="bottom">
             <div class="sale">
-              <h1> R$ {{metrics().sale}}</h1>
+              <h1> {{metrics().sale |currency: 'BRL'}}</h1>
 
               <lucide-icon name="eye"></lucide-icon>
             </div>
@@ -52,9 +52,9 @@
             <h4>Investido</h4>
           </div>
           <div>
-            <h1>
-              R$ {{metrics().investment}}
-            </h1>
+            <h2>
+              {{metrics().investment |currency: 'BRL'}}
+            </h2>
 
           </div>
         </div>
@@ -67,10 +67,10 @@
           </div>
 
           <div>
-            <h1>
-              R$ {{metrics().deposit}}
+            <h2>
+              {{metrics().deposit|currency: 'BRL'}}
 
-            </h1>
+            </h2>
 
           </div>
         </div>
@@ -84,9 +84,9 @@
 
           </div>
           <div>
-            <h1>
-              R$ {{metrics().spent}}
-            </h1>
+            <h2>
+              {{metrics().spent|currency: 'BRL'}}
+            </h2>
 
           </div>
         </div>
@@ -121,7 +121,7 @@
               </div>
 
               <span class="bottom">
-                R$ {{category.value}}
+                {{category.value | currency: 'BRL'}}
               </span>
             </div>
 

@@ -5,6 +5,8 @@ import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } fr
 import { NgxMaskDirective } from "ngx-mask";
 import { CreateNewTransactionService } from "../../services/create-new-transaction-service";
 import { toast } from "ngx-sonner";
+import { TransactionStateService } from "../../services/transaction-state-service";
+import { GetMetricsDashboardService } from "../../services/get-metrics-dashboard-service";
 
 
 @Component({
@@ -19,7 +21,9 @@ export class CreateNewTransactionDialogForm implements OnInit {
   toast = toast
   constructor(
     builder: FormBuilder,
-    private createNewTransactionService: CreateNewTransactionService
+    private createNewTransactionService: CreateNewTransactionService,
+    private transactionStateService: TransactionStateService,
+    private getMetricsDashboardService: GetMetricsDashboardService
   ) {
     this.createTransactionForm = builder.group({
       title: ['', [Validators.required]],
@@ -46,6 +50,11 @@ export class CreateNewTransactionDialogForm implements OnInit {
       this.createNewTransactionService.execute(data).subscribe((res) => {
         console.log(res)
         this.toast.success("Transação criada com sucesso")
+
+        this.getMetricsDashboardService.execute().subscribe(res => {
+          this.transactionStateService.notifyTransactionsUpdated(res)
+        })
+
       }, () => {
         this.toast.error("Transação Não Feita")
       });

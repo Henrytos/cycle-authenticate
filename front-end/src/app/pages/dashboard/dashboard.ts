@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Title } from "../../components/title/title";
 import { Header } from "../../components/header/header";
 import { LucideAngularModule } from 'lucide-angular';
@@ -14,6 +14,8 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogTitle } from '@angular/material/dialog';
 import { CreateNewTransactionDialogForm } from '../../components/create-new-transaction-dialog-form/create-new-transaction-dialog-form';
+import { GetMetricsDashboardService, GetMetricsDashboardServiceResponse } from '../../services/get-metrics-dashboard-service';
+import { TransactionStateService } from '../../services/transaction-state-service';
 
 export interface TransactionI {
   id: number,
@@ -32,7 +34,7 @@ export interface TransactionI {
   standalone: true
 })
 // Adiciona OnInit à implementação para consistência
-export class Dashboard implements OnInit, AfterViewInit {
+export class Dashboard implements OnInit {
 
   spendingByCategory = [
     {
@@ -56,31 +58,62 @@ export class Dashboard implements OnInit, AfterViewInit {
     }
   ];
 
+  metrics = signal({} as GetMetricsDashboardServiceResponse)
+
   readonly dialog = inject(MatDialog);
 
 
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
+  private chartInstance: Chart | undefined;
+  constructor(
+    private getMetricsDashboardService: GetMetricsDashboardService,
+    private transactionStateService: TransactionStateService
+
+  ) {
+    transactionStateService.transactionMetricsUpdate$.subscribe((metrics) => {
+      this.metrics.update(() => metrics)
+      this.loadChart()
+    })
+  }
+
+  loadChart() {
+    if (this.chartInstance) {
+
+      this.chartInstance.data.datasets[0].data[0] = this.metrics().deposit
+      this.chartInstance.data.datasets[0].data[1] = this.metrics().spent
+      this.chartInstance.data.datasets[0].data[2] = this.metrics().investment
+
+      this.chartInstance.update()
+    } else {
+      this.load()
+    }
+  }
 
   ngOnInit(): void {
+
+    this.getMetricsDashboardService.execute().subscribe((res) => {
+      this.metrics.update(() => res);
+      this.load()
+    })
   }
 
   openDialog() {
     this.dialog.open(CreateNewTransactionDialogForm);
   }
 
-  ngAfterViewInit(): void {
+  load(): void {
 
     // **REGISTRO DOS COMPONENTES NECESSÁRIOS PARA O GRÁFICO DE PIZZA**
     Chart.register(ArcElement, PieController, Tooltip, Legend);
 
     if (this.chartCanvas) {
-      new Chart(this.chartCanvas.nativeElement, {
+      this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
         type: 'doughnut',
         data: {
           labels: ['Ganhos', 'Gastos', 'Investimentos'],
           datasets: [{
             label: 'Vendas',
-            data: [12, 4, 3],
+            data: [this.metrics().deposit, this.metrics().spent, this.metrics().investment],
             backgroundColor: [
               'rgba(85, 176, 46,0.8)',
               'rgba(233, 48, 48,0.8)',

@@ -11,6 +11,8 @@ import com.stefanini.cycle_authenticate.domain.value_objects.MethodPayment;
 import com.stefanini.cycle_authenticate.domain.value_objects.TypeTransaction;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -58,6 +60,9 @@ public class TransactionsServiceImpl implements TransactionsServicePort {
             return 0.0;
         }).sum();
 
+        BigDecimal bigDecimalSpent  = new BigDecimal(String.valueOf(spent));
+        bigDecimalSpent = bigDecimalSpent.setScale(2, RoundingMode.DOWN);
+
         double deposit = transactions.stream().mapToDouble((t) -> {
             if (t.getTypeTransaction().equals(TypeTransaction.DEPOSIT)) {
                 return t.getValue();
@@ -65,15 +70,22 @@ public class TransactionsServiceImpl implements TransactionsServicePort {
             return 0.0;
         }).sum();
 
+        BigDecimal bigDecimalDeposit = new BigDecimal(String.valueOf(deposit));
+        bigDecimalDeposit = bigDecimalDeposit.setScale(2, RoundingMode.DOWN);
+
         double investment = transactions.stream().mapToDouble((t) -> {
             if (t.getTypeTransaction().equals(TypeTransaction.INVESTMENT)) {
                 return t.getValue();
             }
             return 0.0;
         }).sum();
+        BigDecimal bigDecimalInvestment = new BigDecimal(String.valueOf(investment));
+        bigDecimalInvestment = bigDecimalInvestment.setScale(2, RoundingMode.DOWN);
 
-        double sale = deposit - (spent + investment);
 
-        return new GetMetricsUserDTO(spent, deposit, investment, sale);
+        BigDecimal bigDecimalSale =  bigDecimalDeposit.subtract(bigDecimalInvestment).subtract(bigDecimalSpent);
+        bigDecimalSale = bigDecimalSale.setScale(2, RoundingMode.DOWN);
+
+        return new GetMetricsUserDTO(bigDecimalSpent.doubleValue(), bigDecimalDeposit.doubleValue(), bigDecimalInvestment.doubleValue(), bigDecimalSale.doubleValue());
     }
 }

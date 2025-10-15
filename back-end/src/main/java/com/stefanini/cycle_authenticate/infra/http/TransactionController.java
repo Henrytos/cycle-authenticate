@@ -2,6 +2,7 @@ package com.stefanini.cycle_authenticate.infra.http;
 
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.TransactionsServicePort;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateTransactionDTO;
+import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.GetMetricsUserDTO;
 import com.stefanini.cycle_authenticate.domain.entities.Transaction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,10 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -47,6 +45,16 @@ public class TransactionController {
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
+    }
+
+    @GetMapping("/metrics")
+    public ResponseEntity<GetMetricsUserDTO> getMetrics(
+            HttpServletRequest request
+    ){
+        UUID userId = UUID.fromString(request.getAttribute("userId").toString());
+        GetMetricsUserDTO getMetricsUserDTO = this.transactionsServicePort.getMetricsBySenderId(userId);
+
+        return ResponseEntity.ok().body(getMetricsUserDTO);
     }
 
 }

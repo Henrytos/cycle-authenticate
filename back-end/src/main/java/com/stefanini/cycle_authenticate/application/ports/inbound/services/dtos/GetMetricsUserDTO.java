@@ -6,4 +6,14 @@ public record GetMetricsUserDTO (
         Double investment,
         Double sale
 ){
+
+    @Override
+    public String toString() {
+        return "GetMetricsUserDTO{" +
+                "spent=" + spent +
+                ", deposit=" + deposit +
+                ", investment=" + investment +
+                ", sale=" + sale +
+                '}';
+    }
 }

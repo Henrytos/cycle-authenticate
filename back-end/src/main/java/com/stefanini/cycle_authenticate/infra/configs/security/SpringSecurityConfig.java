@@ -32,7 +32,8 @@ public class SpringSecurityConfig {
 
     private final String[] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
             "/me",
-            "/transactions"
+            "/transactions",
+            "/transactions/metrics"
     };
 
     private final String[] ENDPOINTS_ADMIN = {

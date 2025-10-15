@@ -2,11 +2,11 @@
 
   <div class="left">
     <div class="icon-transaction">
-      @if(transaction.typeMethod=="credito"){
+      @if(transaction.typeMethod=="CREDIT"){
       <lucide-icon name="credit-card"></lucide-icon>
-      } @else if (transaction.typeMethod=="boleto") {
+      } @else if (transaction.typeMethod=="TICKET") {
       <lucide-icon name="tally-4"></lucide-icon>
-      } @else if (transaction.typeMethod == "pix") {
+      } @else if (transaction.typeMethod == "PIX") {
       <lucide-icon name="badge-dollar-sign"></lucide-icon>
       }
     </div>

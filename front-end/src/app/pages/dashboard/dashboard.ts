@@ -21,7 +21,7 @@ export interface TransactionI {
   date: string,
   value: string,
   type: "entry" | "spent",
-  typeMethod: "pix" | "boleto" | "credito"
+  typeMethod: "PIX" | "TICKET" | "CREDIT"
 }
 
 @Component({

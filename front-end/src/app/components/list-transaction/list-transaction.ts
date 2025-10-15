@@ -17,7 +17,7 @@ export class ListTransaction {
       date: "15 Nov, 2024",
       value: "R$ 3.900",
       type: "entry",
-      typeMethod: "pix"
+      typeMethod: "PIX"
     },
     {
       id: 2,
@@ -25,7 +25,7 @@ export class ListTransaction {
       date: "14 Nov, 2024",
       value: "R$ 120",
       type: "spent",
-      typeMethod: "credito"
+      typeMethod: "CREDIT"
     },
     {
       id: 3,
@@ -33,7 +33,7 @@ export class ListTransaction {
       date: "13 Nov, 2024",
       value: "R$ 1.800",
       type: "spent",
-      typeMethod: "boleto"
+      typeMethod: "TICKET"
     },
     {
       id: 4,
@@ -41,7 +41,7 @@ export class ListTransaction {
       date: "12 Nov, 2024",
       value: "R$ 3.000",
       type: "entry",
-      typeMethod: "pix"
+      typeMethod: "PIX"
     },
     {
       id: 5,
@@ -49,7 +49,7 @@ export class ListTransaction {
       date: "15 Nov, 2024",
       value: "R$ 3.900",
       type: "entry",
-      typeMethod: "pix"
+      typeMethod: "PIX"
     },
     {
       id: 6,
@@ -57,7 +57,7 @@ export class ListTransaction {
       date: "14 Nov, 2024",
       value: "R$ 120",
       type: "spent",
-      typeMethod: "credito"
+      typeMethod: "CREDIT"
     },
     {
       id: 7,
@@ -65,7 +65,7 @@ export class ListTransaction {
       date: "13 Nov, 2024",
       value: "R$ 1.800",
       type: "spent",
-      typeMethod: "boleto"
+      typeMethod: "TICKET"
     },
     {
       id: 8,
@@ -73,7 +73,7 @@ export class ListTransaction {
       date: "12 Nov, 2024",
       value: "R$ 3.000",
       type: "entry",
-      typeMethod: "pix"
+      typeMethod: "PIX"
     }
   ]
 

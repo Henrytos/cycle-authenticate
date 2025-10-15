@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, Reacti
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from "@angular/material/dialog";
 import { NgxMaskDirective } from "ngx-mask";
+import { CreateNewTransactionService } from "../../services/create-new-transaction-service";
+import { toast } from "ngx-sonner";
 
 
 @Component({
@@ -13,13 +15,15 @@ import { NgxMaskDirective } from "ngx-mask";
   styleUrl: 'create-new-transaction-dialog-form.scss'
 })
 export class CreateNewTransactionDialogForm implements OnInit {
-
-
   createTransactionForm: FormGroup;
-  constructor(builder: FormBuilder) {
+  toast = toast
+  constructor(
+    builder: FormBuilder,
+    private createNewTransactionService: CreateNewTransactionService
+  ) {
     this.createTransactionForm = builder.group({
       title: ['', [Validators.required]],
-      valueInReal: ['', [Validators.required]],
+      value: ['', [Validators.required]],
       typeTransaction: ['', [Validators.required]],
       methodPayment: ['', [Validators.required]],
       dateOfPayment: ['', [Validators.required]],
@@ -35,7 +39,17 @@ export class CreateNewTransactionDialogForm implements OnInit {
 
   createTransactionFormSubmit() {
 
-    console.log(this.createTransactionForm.value)
+
+    if (this.createTransactionForm.valid) {
+      const data = this.createTransactionForm.value;
+      console.log(data)
+      this.createNewTransactionService.execute(data).subscribe((res) => {
+        console.log(res)
+        this.toast.success("Transação criada com sucesso")
+      }, () => {
+        this.toast.error("Transação Não Feita")
+      });
+    }
   }
 
 }

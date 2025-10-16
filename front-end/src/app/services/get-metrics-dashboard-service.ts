@@ -18,13 +18,7 @@ export class GetMetricsDashboardService {
   ) { }
 
   public execute(): Observable<GetMetricsDashboardServiceResponse> {
-    return this.httpClient.get<GetMetricsDashboardServiceResponse>("api/transactions/metrics",
-      {
-        headers: {
-          "Authorization": `${localStorage.getItem("Authorization")}`
-        }
-      }
-    )
+    return this.httpClient.get<GetMetricsDashboardServiceResponse>("api/transactions/metrics")
   }
 
 }

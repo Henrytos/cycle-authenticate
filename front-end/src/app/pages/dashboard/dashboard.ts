@@ -57,6 +57,11 @@ export class Dashboard implements OnInit {
 
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
   private chartInstance: Chart | undefined;
+
+
+  @ViewChild('saleElement')
+  private saleElement!: ElementRef<HTMLElement>
+
   constructor(
     private getMetricsDashboardService: GetMetricsDashboardService,
     private transactionStateService: TransactionStateService
@@ -95,6 +100,21 @@ export class Dashboard implements OnInit {
 
     this.transactionStateService.loadTransactions()
     this.transactionStateService.loadThreeBiggestExpenses()
+  }
+  clickEye() {
+    let value = this.saleElement.nativeElement.textContent;
+
+    if (value.includes("#")) {
+      this.saleElement.nativeElement.textContent = this.metrics().sale.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).toString().replaceAll(" ", "");
+    } else {
+      value = value.replaceAll(/\d/g, "#").replaceAll(" ", "");
+
+      this.saleElement.nativeElement.textContent = value
+
+    }
   }
 
   openDialog() {

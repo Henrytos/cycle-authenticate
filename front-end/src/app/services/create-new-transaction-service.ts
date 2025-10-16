@@ -25,11 +25,7 @@ export class CreateNewTransactionService {
 
   public execute(data: CreateNewTransactionServiceRequest): Observable<CreateNewTransactionServiceResponse> {
     console.log(data)
-    return this.httpClient.post<CreateNewTransactionServiceResponse>("api/transactions", data, {
-      headers: {
-        "Authorization": `${localStorage.getItem("Authorization")}`
-      }
-    })
+    return this.httpClient.post<CreateNewTransactionServiceResponse>("api/transactions", data)
   }
 
 }

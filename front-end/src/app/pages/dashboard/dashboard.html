@@ -27,9 +27,9 @@
 
           <div class="bottom">
             <div class="sale">
-              <h1> {{metrics().sale |currency: 'BRL'}}</h1>
+              <h1 #saleElement> {{metrics().sale |currency: 'BRL'}}</h1>
 
-              <lucide-icon name="eye"></lucide-icon>
+              <lucide-icon name="eye" (click)="clickEye()"></lucide-icon>
             </div>
 
             <button matButton (click)="openDialog()" class="button-new-transaction">

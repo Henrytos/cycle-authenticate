@@ -26,11 +26,7 @@ export class GetProfileUserService {
       return of({ username } as GetProfileUserServiceResponse)
     }
 
-    return this.httpClient.get<GetProfileUserServiceResponse>("api/me", {
-      headers: {
-        "Authorization": `${localStorage.getItem("Authorization")}`
-      }
-    }).pipe(
+    return this.httpClient.get<GetProfileUserServiceResponse>("api/me").pipe(
       tap((res) => {
         localStorage.setItem("username", res.username)
       })

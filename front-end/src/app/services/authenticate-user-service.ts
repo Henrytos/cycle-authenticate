@@ -33,6 +33,10 @@ export class AuthenticateUserService {
     localStorage.setItem("Authorization", `Bearer ${token}`)
   }
 
+  getToken() {
+    return localStorage.getItem("Authorization")
+  }
+
   isLoggedIn() {
 
     const token = localStorage.getItem("Authorization")

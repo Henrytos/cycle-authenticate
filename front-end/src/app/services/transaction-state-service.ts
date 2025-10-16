@@ -37,11 +37,7 @@ export class TransactionStateService {
   }
 
   loadThreeBiggestExpenses() {
-    this.httpClient.get<Expenses[]>("api/transactions/three_biggest_expenses", {
-      headers: {
-        "Authorization": `${localStorage.getItem("Authorization")}`
-      }
-    }).subscribe(res => {
+    this.httpClient.get<Expenses[]>("api/transactions/three_biggest_expenses").subscribe(res => {
       this.transactionThreeBiggestExpensesSource.next(res);
     })
   }

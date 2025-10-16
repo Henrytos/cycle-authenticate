@@ -15,4 +15,8 @@ public interface JpaTransactionModelRepository extends JpaRepository<Transaction
 
     @Query(value = "SELECT * FROM transactions t WHERE t.sender_id = :senderId ORDER BY t.date_of_payment DESC LIMIT 8", nativeQuery = true)
     List<TransactionModel> findAllBySenderRecent(@Param("senderId") UUID senderId);
+
+    @Query(value = "SELECT * FROM transactions t WHERE t.sender_id = :senderId AND t.type_transaction = 'SPENT' ORDER BY t.value DESC LIMIT 3", nativeQuery = true)
+    List<TransactionModel> findThreeLargest(@Param("senderId") UUID senderId);
+
 }

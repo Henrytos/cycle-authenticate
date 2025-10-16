@@ -3,6 +3,7 @@ package com.stefanini.cycle_authenticate.infra.http;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.TransactionsServicePort;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateTransactionDTO;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.GetMetricsUserDTO;
+import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.LargestExpensesDTO;
 import com.stefanini.cycle_authenticate.domain.entities.Transaction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -65,6 +66,17 @@ public class TransactionController {
 
         UUID userId = UUID.fromString(request.getAttribute("userId").toString());
         List<Transaction> transactions = this.transactionsServicePort.findRecentTransactionsBySenderId(userId);
+
+        return ResponseEntity.ok().body(transactions);
+    }
+
+    @GetMapping("/three_biggest_expenses")
+    public ResponseEntity<List<LargestExpensesDTO>> getThreeLargestExpenses(
+            HttpServletRequest request
+    ){
+
+        UUID userId = UUID.fromString(request.getAttribute("userId").toString());
+        List<LargestExpensesDTO> transactions= this.transactionsServicePort.getThreeLargestExpenses(userId);
 
         return ResponseEntity.ok().body(transactions);
     }

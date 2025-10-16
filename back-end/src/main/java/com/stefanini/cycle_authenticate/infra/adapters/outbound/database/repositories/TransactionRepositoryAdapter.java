@@ -37,4 +37,11 @@ public class TransactionRepositoryAdapter implements TransactionRepositoryPort {
 
         return transactionsModel.stream().map(transactionMapper::toDomain).toList();
     }
+
+    @Override
+    public List<Transaction> getThreeLargest(UUID senderId) {
+        List<TransactionModel> transactionsModel = this.jpaTransactionModelRepository.findThreeLargest(senderId);
+
+        return transactionsModel.stream().map(transactionMapper::toDomain).toList();
+    }
 }

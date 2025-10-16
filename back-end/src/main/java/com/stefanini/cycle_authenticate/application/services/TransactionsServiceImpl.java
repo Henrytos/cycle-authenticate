@@ -4,6 +4,7 @@ import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundExcep
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.TransactionsServicePort;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateTransactionDTO;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.GetMetricsUserDTO;
+import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.LargestExpensesDTO;
 import com.stefanini.cycle_authenticate.application.ports.outbound.repositories.TransactionRepositoryPort;
 import com.stefanini.cycle_authenticate.application.ports.outbound.repositories.UserRepositoryPort;
 import com.stefanini.cycle_authenticate.domain.entities.Transaction;
@@ -93,5 +94,18 @@ public class TransactionsServiceImpl implements TransactionsServicePort {
         bigDecimalSale = bigDecimalSale.setScale(2, RoundingMode.DOWN);
 
         return new GetMetricsUserDTO(bigDecimalSpent.doubleValue(), bigDecimalDeposit.doubleValue(), bigDecimalInvestment.doubleValue(), bigDecimalSale.doubleValue());
+    }
+
+    @Override
+    public List<LargestExpensesDTO> getThreeLargestExpenses(UUID senderId) {
+
+        this.userRepositoryPort.findById(senderId).orElseThrow(UserNotFoundException::new);
+        List<Transaction> transactions = this.transactionRepositoryPort.getThreeLargest(senderId);
+
+        GetMetricsUserDTO getMetricsUserDTO = this.getMetricsBySenderId(senderId);
+
+        Double deposit  = getMetricsUserDTO.deposit();
+
+        return transactions.stream().map(t-> new LargestExpensesDTO(t.getValue(), t.getTitle(),  (int) (t.getValue() / deposit * 100))).toList();
     }
 }

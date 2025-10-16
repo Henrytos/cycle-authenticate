@@ -1,13 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Logo } from "../logo/logo";
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { GetProfileUserService } from '../../services/get-profile-user-service';
 import { LucideAngularModule } from "lucide-angular";
 
 @Component({
   selector: 'app-header',
-  imports: [Logo, MatMenuModule, LucideAngularModule],
+  imports: [Logo, MatMenuModule, LucideAngularModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

@@ -1,6 +1,6 @@
 FROM node:20-slim AS builder
 
-WORKDIR /home/app
+WORKDIR /app
 
 COPY package.json .
 

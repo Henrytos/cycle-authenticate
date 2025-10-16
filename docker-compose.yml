@@ -20,16 +20,18 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    volumes:
+      - ./back-end:/app
     env_file:
       - .env
     depends_on:
       - database
     networks:
       - cycle_network
-  
+
   web:
     container_name: cycle_web
-    build: 
+    build:
       context: ./front-end
       dockerfile: Dockerfile
     ports:
@@ -38,8 +40,9 @@ services:
       - api
     networks:
       - cycle_network
-
-
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
 networks:
   cycle_network:
     name: cycle_network
@@ -47,4 +50,3 @@ networks:
 volumes:
   cycle_database_volume:
     name: cycle_database_volume
-

@@ -1,47 +1,33 @@
 <main>
-
   <app-header />
 
-
   <section>
-    <app-title>
-      Dashboard
-    </app-title>
+    <app-title> Dashboard </app-title>
 
     <div class="grid">
-
       <!-- METRICS -->
 
       <div class="charts-content">
-
         <div class="card grid-column-3 grid-row-3 chart-sale">
           <div class="top">
             <div class="icon">
               <lucide-icon name="wallet"></lucide-icon>
-
             </div>
-            <h4>
-              Saldo
-            </h4>
+            <h4>Saldo</h4>
           </div>
 
           <div class="bottom">
             <div class="sale">
-              <h1 #saleElement> {{metrics().sale |currency: 'BRL'}}</h1>
+              <h1 #saleElement>{{ metrics().sale | currency : 'BRL' }}</h1>
 
               <lucide-icon name="eye" (click)="clickEye()"></lucide-icon>
             </div>
 
             <button matButton (click)="openDialog()" class="button-new-transaction">
               <p>Adicionar Transação</p>
-              <lucide-icon name="arrow-down-up">
-              </lucide-icon>
+              <lucide-icon name="arrow-down-up"> </lucide-icon>
             </button>
-
-
           </div>
-
-
         </div>
 
         <div class="card grid-column-1 grid-row-2 char-investment">
@@ -53,9 +39,8 @@
           </div>
           <div class="value-sale">
             <h2>
-              {{metrics().investment |currency: 'BRL'}}
+              {{ metrics().investment | currency : 'BRL' }}
             </h2>
-
           </div>
         </div>
         <div class="card grid-column-1 grid-row-2 char-up">
@@ -68,10 +53,8 @@
 
           <div class="value-sale">
             <h2>
-              {{metrics().deposit|currency: 'BRL'}}
-
+              {{ metrics().deposit | currency : 'BRL' }}
             </h2>
-
           </div>
         </div>
 
@@ -81,57 +64,48 @@
               <lucide-icon name="trending-down"></lucide-icon>
             </div>
             <h4>Despesas</h4>
-
           </div>
           <div class="value-sale">
             <h2>
-              {{metrics().spent|currency: 'BRL'}}
+              {{ metrics().spent | currency : 'BRL' }}
             </h2>
-
           </div>
         </div>
 
         <div class="card grid-column-1 grid-row-5 chart-pie">
-
           <canvas #chartCanvas></canvas>
-
         </div>
 
         <div class="card grid-column-2 grid-row-5 chart-catories">
-          <h2>
-            Os 3 Maiores Gastos Do Mês
-          </h2>
+          <h2>Os 3 Maiores Gastos Do Mês</h2>
 
           <span class="line"></span>
 
           <div class="categories">
-
             @for (expense of expenses(); track expense.title) {
             <div class="category">
               <div class="top">
                 <h3>
-                  {{expense.title}}
+                  {{ expense.title }}
                 </h3>
                 <p>
-                  @if(expense.percentage >= 100){
-                  +100%
-                  } @else{
-                  {{expense.percentage}}%
-                  }
+                  @if(expense.percentage >= 100){ +100% } @else{
+                  {{ expense.percentage }}% }
                 </p>
               </div>
               <div class="progress">
-                <div class="progress-target"
-                  [style.width]="(expense.percentage > 100 ? 100 : expense.percentage) + '%'"></div>
+                <div
+                  class="progress-target"
+                  [style.width]="(expense.percentage > 100 ? 100 : expense.percentage) + '%'"
+                ></div>
               </div>
 
               <span class="bottom">
-                {{expense.value | currency: 'BRL'}}
+                {{ expense.value | currency : 'BRL' }}
               </span>
             </div>
 
             }
-
           </div>
         </div>
       </div>
@@ -140,6 +114,5 @@
 
       <app-list-transaction></app-list-transaction>
     </div>
-
   </section>
 </main>

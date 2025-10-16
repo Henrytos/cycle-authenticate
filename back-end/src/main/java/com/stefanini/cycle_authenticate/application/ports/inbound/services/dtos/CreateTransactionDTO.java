@@ -10,19 +10,19 @@ import java.time.LocalDate;
 
 public record CreateTransactionDTO(
         @NotBlank
-        @Schema(examples = "academia")
+        @Schema(example = "academia")
         String title,
         @NotNull
-        @Schema(examples = "149.90")
+        @Schema(example = "149.90")
         Double value,
         @ValueOfEnum(enumClass = TypeTransaction.class, message = "deveria ser DEPOSIT | SPENT | INVESTMENT")
-        @Schema(examples = {"DEPOSIT", " SPENT", "INVESTMENT"})
+        @Schema(examples = {"DEPOSIT", " SPENT", "INVESTMENT"}, example = "DEPOSIT")
         String typeTransaction,
         @ValueOfEnum(enumClass = MethodPayment.class, message = "deveria ser PIX | CREDIT | TICKET")
-        @Schema(examples = {"DEPOSIT", " SPENT", "INVESTMENT"})
+        @Schema(examples = {"PIX", "TICKET", "CREDIT"}, example = "PIX")
         String methodPayment,
         @NotNull(message = "data não pode estar vazia ou nula")
-        @Schema(examples = "2025-10-10")
+        @Schema(example = "2025-10-10")
         LocalDate dateOfPayment
 
 ) {

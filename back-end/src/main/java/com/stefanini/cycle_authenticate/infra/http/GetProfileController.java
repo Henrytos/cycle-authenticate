@@ -25,8 +25,8 @@ public class GetProfileController {
 
     @GetMapping
     @Operation(
-            summary = "get profile authenticate",
-            description = "get username, email, date of birth , role  of user authenticate"
+            summary = "Obter perfil",
+            description = "Obter username, email, data de nascimento , cargo  do ususario autenticado"
     )
     @ApiResponse(
             responseCode = "200",

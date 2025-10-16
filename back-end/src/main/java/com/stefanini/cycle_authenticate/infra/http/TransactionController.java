@@ -50,6 +50,7 @@ public class TransactionController {
     }
 
     @GetMapping("/metrics")
+    @Operation(description = "Rota para obter metricas do ususario seja gasto,investimento,deposito e saldo", summary = "Obter metricas do usuario")
     public ResponseEntity<GetMetricsUserDTO> getMetrics(
             HttpServletRequest request
     ){
@@ -60,6 +61,7 @@ public class TransactionController {
     }
 
     @GetMapping("/recents")
+    @Operation(description = "Rota de listagem das transaçõee recentes (9) por meio da data da transação", summary = "Obter as transações recentes")
     public ResponseEntity<List<Transaction>> getRecents(
             HttpServletRequest request
     ){
@@ -71,6 +73,7 @@ public class TransactionController {
     }
 
     @GetMapping("/three_biggest_expenses")
+    @Operation(description = "Rota de listagem dos 3 maiores gastos do usuario no mês", summary = "Obter 3 maiores gastos")
     public ResponseEntity<List<LargestExpensesDTO>> getThreeLargestExpenses(
             HttpServletRequest request
     ){
@@ -82,6 +85,7 @@ public class TransactionController {
     }
 
     @GetMapping()
+    @Operation(description = "Rota de listagem de todas transações", summary = "Listagem de transações")
     public ResponseEntity<List<Transaction>> findALl(
             HttpServletRequest request
     ){

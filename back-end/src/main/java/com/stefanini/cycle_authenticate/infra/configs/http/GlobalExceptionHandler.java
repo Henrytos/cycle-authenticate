@@ -1,5 +1,6 @@
 package com.stefanini.cycle_authenticate.infra.configs.http;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.stefanini.cycle_authenticate.application.exceptions.InputInvalidException;
 import com.stefanini.cycle_authenticate.application.exceptions.InternalApplicationException;
 import com.stefanini.cycle_authenticate.application.exceptions.UserAlreadyExistsException;
@@ -65,6 +66,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.valueOf(e.getStatus())).body(new ResponseMessageDTO(e.getMessage(), e.getStatus()));
     }
 
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ResponseMessageDTO> handlerTokenExpiredException(TokenExpiredException e){
+        return ResponseEntity.status(401).body(new ResponseMessageDTO("Autenticação expirada", 401));
+    }
 }
 
 

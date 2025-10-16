@@ -42,6 +42,12 @@ public class TokenFilterChain extends OncePerRequestFilter {
             String token = header.replaceAll("Bearer ", "");
 
             DecodedJWT decodedJWT = this.sessionTokenServiceAdapter.validate(token);
+
+            if(decodedJWT == null){
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
             UUID userId = UUID.fromString(decodedJWT.getSubject());
 
             Optional<User> user = this.userRepositoryAdapter.findById(userId);

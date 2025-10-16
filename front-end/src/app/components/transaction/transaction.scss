@@ -26,7 +26,8 @@
   }
   .value-transaction {
     font-weight: $font-bold;
-
+    display: flex;
+    gap: 2px;
     &.DEPOSIT {
       color: $green;
     }

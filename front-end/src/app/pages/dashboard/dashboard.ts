@@ -100,6 +100,8 @@ export class Dashboard implements OnInit {
       this.metrics.update(() => res);
       this.load()
     })
+
+    this.transactionStateService.loadTransactions()
   }
 
   openDialog() {

@@ -5,6 +5,7 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { tokenJwtGuardGuard } from './guards/token-jwt-guard-guard';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: "login",
     component: Login

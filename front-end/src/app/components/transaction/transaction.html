@@ -23,14 +23,14 @@
   </div>
 
   <span class="value-transaction {{transaction.typeTransaction}}">
-    @if(transaction.typeTransaction=="DEPOSIT"){
-    +
-    } @else if(transaction.typeTransaction=="SPENT"){
-    -
-    } @else{
 
-    }
-    {{transaction.value | currency:'BRL'}}
+    <span>
+      @if(transaction.typeTransaction=="DEPOSIT"){+} @else if(transaction.typeTransaction=="SPENT"){-}
 
+    </span>
+    <span>
+      {{transaction.value
+      | currency:'BRL'}}
+    </span>
   </span>
 </div>

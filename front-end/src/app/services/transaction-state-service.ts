@@ -24,13 +24,11 @@ export class TransactionStateService {
   }
 
   loadTransactions() {
-    console.log("CARREGAND>>>>>")
     this.httpClient.get<TransactionStateServiceResponse>("api/transactions/recents", {
       headers: {
         "Authorization": `${localStorage.getItem("Authorization")}`
       }
     }).subscribe(res => {
-      console.log(res)
       this.transactionRecentsSource.next(res);
     })
   }

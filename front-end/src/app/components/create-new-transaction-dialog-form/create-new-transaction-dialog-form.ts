@@ -54,7 +54,7 @@ export class CreateNewTransactionDialogForm implements OnInit {
         this.getMetricsDashboardService.execute().subscribe(res => {
           this.transactionStateService.notifyTransactionsUpdated(res)
         })
-
+        this.transactionStateService.loadThreeBiggestExpenses()
         this.transactionStateService.loadTransactions()
       }, () => {
         this.toast.error("Transação Não Feita")

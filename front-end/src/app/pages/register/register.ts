@@ -61,7 +61,7 @@ export class Register {
       })
 
     } else {
-      this.toast.warning("Erro no fomulario, porfavor preencha todos os campos")
+      this.toast.warning("Erro no fomulario, por favor preencha todos os campos")
     }
 
     this.registerForm.markAllAsTouched()

@@ -30,19 +30,22 @@ main {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 32px;
-
+      grid-template-rows: 1fr;
       .charts-content {
         grid-column-start: 1;
         grid-column-end: 9;
 
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(12, 1fr);
+        grid-template-rows: repeat(10, 1fr);
         gap: 24px;
 
         .chart-sale {
           background-color: $dark-green;
-
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding-bottom: 32px;
           .icon {
             width: min-content;
             padding: 10px;
@@ -140,7 +143,6 @@ main {
       app-list-transaction {
         grid-column-start: 9;
         grid-column-end: 13;
-        height: 100%;
       }
     }
 
@@ -158,7 +160,6 @@ main {
   padding: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 20px;
   .top {
     display: flex;

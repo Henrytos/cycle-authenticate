@@ -30,6 +30,13 @@ export interface TransactionI {
 
 registerLocaleData(localePt);
 
+export interface Expenses {
+  value: number
+  title: string
+  percentage: number
+}
+
+
 @Component({
   selector: 'app-dashboard',
   imports: [Title, Header, LucideAngularModule, ListTransaction, MatDialogModule, CurrencyPipe],
@@ -41,27 +48,7 @@ registerLocaleData(localePt);
 // Adiciona OnInit à implementação para consistência
 export class Dashboard implements OnInit {
 
-  spendingByCategory = [
-    {
-      id: 1,
-      type: "Moradia",
-      progress: 50,
-      value: 2500
-    },
-
-    {
-      id: 2,
-      type: "Alimentação",
-      progress: 40,
-      value: 1200
-    },
-    {
-      id: 3,
-      type: "Saúde",
-      progress: 30,
-      value: 320
-    }
-  ];
+  expenses = signal([] as Expenses[]);
 
   metrics = signal({} as GetMetricsDashboardServiceResponse)
 
@@ -79,6 +66,11 @@ export class Dashboard implements OnInit {
       this.metrics.update(() => metrics)
       this.loadChart()
     })
+
+    transactionStateService.transactionThreeBiggestUpdate$.subscribe(expenses => {
+      this.expenses.update(() => expenses)
+    })
+
   }
 
   loadChart() {
@@ -102,6 +94,7 @@ export class Dashboard implements OnInit {
     })
 
     this.transactionStateService.loadTransactions()
+    this.transactionStateService.loadThreeBiggestExpenses()
   }
 
   openDialog() {

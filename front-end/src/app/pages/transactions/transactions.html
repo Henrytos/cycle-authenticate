@@ -31,10 +31,30 @@
           <td class="type">
             <div class="bg-{{transaction.typeTransaction}}">
               <span class="type-circle {{transaction.typeTransaction}}"></span>
-              <span class="text">{{transaction.typeTransaction | lowercase}}</span>
+              <span class="text">
+                
+            @if (transaction.typeTransaction == 'SPENT') {
+              Gasto
+            } @else if(transaction.typeTransaction == 'INVESTMENT') {
+              Investimento
+            } @else {
+              Receita
+            }</span>
             </div>
           </td>
-          <td>{{transaction.methodPayment| lowercase}}</td>
+          <td>
+
+            @if (transaction.methodPayment == 'PIX') {
+              Pix
+            } @else if(transaction.methodPayment == 'TICKET') {
+              Boleto
+            } @else if(transaction.methodPayment == 'CREDIT') {
+              Cartão de Crédito
+            } @else {
+              Cartão de Débito
+            } 
+
+          </td>
           <td class="date">{{transaction.dateOfPayment| date: 'longDate'}}</td>
           <td>{{transaction.value | currency:'BRL'}}</td>
           <td class="icon-trash">
@@ -44,6 +64,14 @@
           }
 
       </tbody>
+
+      @if (transactions().length == 0) {
+        <tfoot>
+          <tr>
+            <td colspan="6" class="no-transactions">Nenhuma transação encontrada😞.</td>
+          </tr>
+        </tfoot>
+      }
     </table>
   </section>
 </main>

@@ -26,7 +26,6 @@ export const tokenInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   if (!isPublicUrl && !token) {
-    toast.error('Usuário não autenticado. Por favor, faça login.');
     router.navigate(['/login']);
   }
 

@@ -82,6 +82,9 @@
           <span class="line"></span>
 
           <div class="categories">
+            @if (expenses().length == 0 ) {
+            <p class="no-expenses">Nenhuma despesa encontrada😞.</p>
+            }
             @for (expense of expenses(); track expense.title) {
             <div class="category">
               <div class="top">

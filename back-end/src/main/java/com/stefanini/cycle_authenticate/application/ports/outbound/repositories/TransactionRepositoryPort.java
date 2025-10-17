@@ -11,4 +11,8 @@ public interface TransactionRepositoryPort {
     Transaction save(Transaction transaction);
     List<Transaction> findRecentBySenderId(UUID senderId);
     List<Transaction> getThreeLargest(UUID senderId);
+
+    void removeById(UUID transactionId);
+
+    Transaction findById(UUID transactionId);
 }

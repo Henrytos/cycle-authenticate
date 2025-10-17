@@ -7,6 +7,7 @@ import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.
 import com.stefanini.cycle_authenticate.domain.entities.Transaction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Tag(name = "transactions")
@@ -85,7 +87,7 @@ public class TransactionController {
     }
 
     @GetMapping()
-    @Operation(description = "Rota de listagem de todas transações", summary = "Listagem de transações")
+    @Operation(description = "Rota de listagem de todas transações.", summary = "Listagem de transações")
     public ResponseEntity<List<Transaction>> findALl(
             HttpServletRequest request
     ){
@@ -93,6 +95,18 @@ public class TransactionController {
         List<Transaction> transactions = this.transactionsServicePort.findAllTransactionsBySenderId(userId);
 
         return ResponseEntity.ok().body(transactions);
+    }
+
+    @DeleteMapping("/{transactionId}")
+    public ResponseEntity<Object> delete(
+            @PathVariable String transactionId,
+            ServletRequest request
+    ){
+        UUID userId = UUID.fromString(request.getAttribute("userId").toString());
+
+        this.transactionsServicePort.removeTransactionById(UUID.fromString(transactionId), userId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("remove transaction");
     }
 
 }

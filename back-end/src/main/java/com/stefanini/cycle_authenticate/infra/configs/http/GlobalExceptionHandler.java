@@ -1,10 +1,7 @@
 package com.stefanini.cycle_authenticate.infra.configs.http;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.stefanini.cycle_authenticate.application.exceptions.InputInvalidException;
-import com.stefanini.cycle_authenticate.application.exceptions.InternalApplicationException;
-import com.stefanini.cycle_authenticate.application.exceptions.UserAlreadyExistsException;
-import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundException;
+import com.stefanini.cycle_authenticate.application.exceptions.*;
 import com.stefanini.cycle_authenticate.domain.exceptions.EmailNotWithinStandards;
 import com.stefanini.cycle_authenticate.domain.exceptions.PasswordNotWithinStandards;
 import org.springframework.http.HttpStatus;
@@ -69,6 +66,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TokenExpiredException.class)
     public ResponseEntity<ResponseMessageDTO> handlerTokenExpiredException(TokenExpiredException e){
         return ResponseEntity.status(401).body(new ResponseMessageDTO("Autenticação expirada", 401));
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ResponseMessageDTO> handlerUnauthorizedException(UnauthorizedException e){
+        return ResponseEntity.status(e.getStatus()).body(new ResponseMessageDTO(e.getMessage(), e.getStatus()));
     }
 }
 

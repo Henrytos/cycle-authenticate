@@ -7,6 +7,7 @@ import com.stefanini.cycle_authenticate.infra.adapters.outbound.database.models.
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -43,5 +44,17 @@ public class TransactionRepositoryAdapter implements TransactionRepositoryPort {
         List<TransactionModel> transactionsModel = this.jpaTransactionModelRepository.findThreeLargest(senderId);
 
         return transactionsModel.stream().map(transactionMapper::toDomain).toList();
+    }
+
+    @Override
+    public void removeById(UUID transactionId) {
+        this.jpaTransactionModelRepository.deleteById(transactionId);
+    }
+
+    @Override
+    public Transaction findById(UUID transactionId) {
+        Optional<TransactionModel> transactionModel = this.jpaTransactionModelRepository.findById(transactionId);
+
+        return transactionModel.map(this.transactionMapper::toDomain).orElse(null);
     }
 }

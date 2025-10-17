@@ -26,12 +26,6 @@ export const routes: Routes = [
     component: Dashboard,
     canActivate: [tokenJwtGuardGuard],
     providers: [
-      provideHttpClient(
-        withInterceptors([
-          tokenInterceptorInterceptor
-        ]
-        )
-      ),
       GetMetricsDashboardService,
       TransactionStateService,
       GetProfileUserService,
@@ -43,12 +37,6 @@ export const routes: Routes = [
     component: Transactions,
     canActivate: [tokenJwtGuardGuard],
     providers: [
-      provideHttpClient(
-        withInterceptors([
-          tokenInterceptorInterceptor
-        ]
-        )
-      ),
       GetMetricsDashboardService,
       TransactionStateService,
       GetProfileUserService,

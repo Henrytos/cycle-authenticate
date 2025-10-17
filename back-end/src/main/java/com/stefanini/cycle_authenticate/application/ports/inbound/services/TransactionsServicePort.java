@@ -16,5 +16,5 @@ public interface TransactionsServicePort {
     List<Transaction> findRecentTransactionsBySenderId(UUID senderId);
     GetMetricsUserDTO getMetricsBySenderId(UUID senderId);
     List<LargestExpensesDTO> getThreeLargestExpenses(UUID senderId);
-
+    void removeTransactionById(UUID transactionId,  UUID userId);
 }

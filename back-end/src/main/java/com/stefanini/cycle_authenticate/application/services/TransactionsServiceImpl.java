@@ -1,5 +1,6 @@
 package com.stefanini.cycle_authenticate.application.services;
 
+import com.stefanini.cycle_authenticate.application.exceptions.UnauthorizedException;
 import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundException;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.TransactionsServicePort;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateTransactionDTO;
@@ -8,6 +9,7 @@ import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.
 import com.stefanini.cycle_authenticate.application.ports.outbound.repositories.TransactionRepositoryPort;
 import com.stefanini.cycle_authenticate.application.ports.outbound.repositories.UserRepositoryPort;
 import com.stefanini.cycle_authenticate.domain.entities.Transaction;
+import com.stefanini.cycle_authenticate.domain.entities.User;
 import com.stefanini.cycle_authenticate.domain.value_objects.MethodPayment;
 import com.stefanini.cycle_authenticate.domain.value_objects.TypeTransaction;
 import org.springframework.stereotype.Service;
@@ -107,5 +109,17 @@ public class TransactionsServiceImpl implements TransactionsServicePort {
         Double deposit  = getMetricsUserDTO.deposit();
 
         return transactions.stream().map(t-> new LargestExpensesDTO(t.getValue(), t.getTitle(),  (int) (t.getValue() / deposit * 100))).toList();
+    }
+
+    @Override
+    public void removeTransactionById(UUID transactionId, UUID userId) {
+
+        this.userRepositoryPort.findById(userId).orElseThrow(UserNotFoundException::new);
+        Transaction transaction = this.transactionRepositoryPort.findById(transactionId);
+
+            if(!transaction.getSenderId().equals(userId)){
+                throw new UnauthorizedException();
+            }
+        this.transactionRepositoryPort.removeById(transactionId);
     }
 }

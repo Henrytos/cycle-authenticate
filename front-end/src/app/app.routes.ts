@@ -9,6 +9,7 @@ import { GetMetricsDashboardService } from './services/get-metrics-dashboard-ser
 import { TransactionStateService } from './services/transaction-state-service';
 import { GetProfileUserService } from './services/get-profile-user-service';
 import { CreateNewTransactionService } from './services/create-new-transaction-service';
+import { Transactions } from './pages/transactions/transactions';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -23,6 +24,23 @@ export const routes: Routes = [
   {
     path: "dashboard",
     component: Dashboard,
+    canActivate: [tokenJwtGuardGuard],
+    providers: [
+      provideHttpClient(
+        withInterceptors([
+          tokenInterceptorInterceptor
+        ]
+        )
+      ),
+      GetMetricsDashboardService,
+      TransactionStateService,
+      GetProfileUserService,
+      CreateNewTransactionService
+    ]
+  }, 
+  {
+    path: "transactions",
+    component: Transactions,
     canActivate: [tokenJwtGuardGuard],
     providers: [
       provideHttpClient(

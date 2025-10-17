@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { Logo } from "../logo/logo";
 import { Router, RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
@@ -13,7 +13,7 @@ import { LucideAngularModule } from "lucide-angular";
 })
 export class Header implements OnInit {
 
-  path: string = "";
+  @Input() path: "transactions" | "dashboard" | "" = "";
   profileName = signal<string>("")
 
   constructor(

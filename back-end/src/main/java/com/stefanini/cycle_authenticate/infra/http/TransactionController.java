@@ -5,6 +5,9 @@ import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.GetMetricsUserDTO;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.LargestExpensesDTO;
 import com.stefanini.cycle_authenticate.domain.entities.Transaction;
+import com.stefanini.cycle_authenticate.domain.value_objects.MethodPayment;
+import com.stefanini.cycle_authenticate.domain.value_objects.TypeTransaction;
+import com.stefanini.cycle_authenticate.infra.http.dtos.UpdateTransactionDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.ServletRequest;
@@ -107,6 +110,30 @@ public class TransactionController {
         this.transactionsServicePort.removeTransactionById(UUID.fromString(transactionId), userId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("remove transaction");
+    }
+
+    @PutMapping("/{transactionId}")
+    public ResponseEntity<Transaction> update(
+            @PathVariable String transactionId,
+            ServletRequest request,
+            @RequestBody  UpdateTransactionDTO updateTransactionDTO
+    ){
+        UUID userId = UUID.fromString(request.getAttribute("userId").toString());
+
+        Transaction transactionUpdated = this.transactionsServicePort.update(
+                userId,
+                new Transaction(
+                        UUID.fromString(transactionId),
+                        UUID.fromString(updateTransactionDTO.senderId()),
+                        updateTransactionDTO.title(),
+                        updateTransactionDTO.value(),
+                        TypeTransaction.valueOf(updateTransactionDTO.typeTransaction()),
+                        MethodPayment.valueOf(updateTransactionDTO.methodPayment()),
+                        updateTransactionDTO.dateOfPayment()
+                )
+                );
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(transactionUpdated);
     }
 
 }

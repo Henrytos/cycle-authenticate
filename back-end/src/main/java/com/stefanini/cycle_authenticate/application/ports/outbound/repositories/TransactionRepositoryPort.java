@@ -15,4 +15,5 @@ public interface TransactionRepositoryPort {
     void removeById(UUID transactionId);
 
     Transaction findById(UUID transactionId);
+    Transaction update(Transaction transaction);
 }

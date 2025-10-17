@@ -22,7 +22,7 @@ export class TransactionStateService {
   transactionThreeBiggestUpdate$: Observable<Expenses[]> =
     this.transactionThreeBiggestExpensesSource.asObservable();
   transactionStateUpdate$: Observable<TransactionI[]> = this.transactionStateSource.asObservable();
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   loadTransactions() {
     this.httpClient
@@ -68,5 +68,9 @@ export class TransactionStateService {
 
   getAllTransactions() {
     return this.httpClient.get<TransactionI[]>('api/transactions');
+  }
+
+  updateTransaction(transaction: TransactionI) {
+    return this.httpClient.put<TransactionI>(`api/transactions/${transaction.id}`, transaction)
   }
 }

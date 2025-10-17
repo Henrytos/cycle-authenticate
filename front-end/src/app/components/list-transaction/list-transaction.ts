@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { TransactionI } from '../../pages/dashboard/dashboard';
 import { Transaction } from "../transaction/transaction";
 import { TransactionStateService } from '../../services/transaction-state-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list-transaction',
-  imports: [Transaction],
+  imports: [Transaction, RouterLink],
   templateUrl: './list-transaction.html',
   styleUrl: './list-transaction.scss'
 })

@@ -4,4 +4,4 @@ WORKDIR /app
 
 COPY . .
 
-ENTRYPOINT ["mvn", "spring-boot:run"]
+ENTRYPOINT ["mvn", "spring-boot:run", "-Dspring.devtools.restart.enabled=true"]

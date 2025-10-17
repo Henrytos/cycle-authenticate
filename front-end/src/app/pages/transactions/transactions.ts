@@ -11,7 +11,7 @@ import { TransactionI } from '../dashboard/dashboard';
 
 @Component({
   selector: 'app-transactions',
-  imports: [Header, Title, LucideAngularModule, DatePipe, CurrencyPipe, LowerCasePipe],
+  imports: [Header, Title, LucideAngularModule, DatePipe, CurrencyPipe],
   templateUrl: './transactions.html',
   providers: [
     {
@@ -32,7 +32,7 @@ export class Transactions implements OnInit {
 
   transactions = signal<TransactionI[]>([]);
 
-  constructor(private transactionStateService: TransactionStateService) {}
+  constructor(private transactionStateService: TransactionStateService) { }
   ngOnInit(): void {
     this.transactionStateService.getAllTransactions().subscribe((transactions) => {
       this.transactions.set(transactions); // update
@@ -43,8 +43,21 @@ export class Transactions implements OnInit {
     });
   }
 
-  openDialog() {
-    this.dialog.open(CreateNewTransactionDialogForm);
+  openDialogCreateTransaction() {
+    this.dialog.open(CreateNewTransactionDialogForm, {
+      data: {
+        isUpdated: false
+      }
+    });
+  }
+
+  openDialogUpdatedTransaction(transaction: TransactionI) {
+    this.dialog.open(CreateNewTransactionDialogForm, {
+      data: {
+        isUpdated: true,
+        transactionDefault: transaction
+      }
+    });
   }
 
   deleteTransaction(id: string) {

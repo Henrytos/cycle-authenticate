@@ -118,7 +118,11 @@ export class Dashboard implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(CreateNewTransactionDialogForm);
+    this.dialog.open(CreateNewTransactionDialogForm, {
+      data: {
+        isUpdated: false
+      }
+    });
   }
 
   load(): void {

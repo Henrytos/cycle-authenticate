@@ -4,7 +4,7 @@
   <div class="top">
     <app-title> Transações </app-title>
 
-    <button matButton (click)="openDialog()" class="button-new-transaction">
+    <button matButton (click)="openDialogCreateTransaction()" class="button-new-transaction">
       <p>Adicionar Transação</p>
       <lucide-icon name="arrow-down-up"> </lucide-icon>
     </button>
@@ -25,52 +25,56 @@
 
       <tbody>
 
-          @for (transaction of transactions(); track transaction.id) {
+        @for (transaction of transactions(); track transaction.id) {
         <tr>
-          <td>{{transaction.title}}</td>  
+          <td>{{transaction.title}}</td>
           <td class="type">
             <div class="bg-{{transaction.typeTransaction}}">
               <span class="type-circle {{transaction.typeTransaction}}"></span>
               <span class="text">
-                
-            @if (transaction.typeTransaction == 'SPENT') {
-              Gasto
-            } @else if(transaction.typeTransaction == 'INVESTMENT') {
-              Investimento
-            } @else {
-              Receita
-            }</span>
+
+                @if (transaction.typeTransaction == 'SPENT') {
+                Gasto
+                } @else if(transaction.typeTransaction == 'INVESTMENT') {
+                Investimento
+                } @else {
+                Receita
+                }</span>
             </div>
           </td>
           <td>
 
             @if (transaction.methodPayment == 'PIX') {
-              Pix
+            Pix
             } @else if(transaction.methodPayment == 'TICKET') {
-              Boleto
+            Boleto
             } @else if(transaction.methodPayment == 'CREDIT') {
-              Cartão de Crédito
+            Cartão de Crédito
             } @else {
-              Cartão de Débito
-            } 
+            Cartão de Débito
+            }
 
           </td>
           <td class="date">{{transaction.dateOfPayment| date: 'longDate'}}</td>
           <td>{{transaction.value | currency:'BRL'}}</td>
           <td class="icon-trash">
-            <lucide-icon name="trash-2" name="trash-2" strokeWidth="2" [size]="16" color="#71717a" (click)="deleteTransaction(transaction.id)"> </lucide-icon>
+            <lucide-icon name="trash-2" name="trash-2" strokeWidth="2" [size]="16" color="#71717a"
+              (click)="deleteTransaction(transaction.id)"> </lucide-icon>
+            <lucide-icon name="square-pen" name="square-pen" strokeWidth="2" [size]="16" color="#71717a"
+              (click)="openDialogUpdatedTransaction(transaction)"> </lucide-icon>
+
           </td>
-        </tr>            
-          }
+        </tr>
+        }
 
       </tbody>
 
       @if (transactions().length == 0) {
-        <tfoot>
-          <tr>
-            <td colspan="6" class="no-transactions">Nenhuma transação encontrada😞.</td>
-          </tr>
-        </tfoot>
+      <tfoot>
+        <tr>
+          <td colspan="6" class="no-transactions">Nenhuma transação encontrada😞.</td>
+        </tr>
+      </tfoot>
       }
     </table>
   </section>

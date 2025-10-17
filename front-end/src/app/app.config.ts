@@ -17,6 +17,7 @@ import {
   LucideAngularModule,
   Menu,
   PiggyBank,
+  SquarePen,
   Tally4,
   Trash2,
   TrendingDown,
@@ -46,6 +47,7 @@ export const appConfig: ApplicationConfig = {
         ArrowDownUp,
         LogOut,
         Trash2,
+        SquarePen
       })
     ),
     provideNgxMask(),

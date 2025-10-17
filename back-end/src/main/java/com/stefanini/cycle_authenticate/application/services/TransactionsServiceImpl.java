@@ -122,4 +122,16 @@ public class TransactionsServiceImpl implements TransactionsServicePort {
             }
         this.transactionRepositoryPort.removeById(transactionId);
     }
+
+    @Override
+    public Transaction update(UUID userId, Transaction transaction) {
+        User userFind = this.userRepositoryPort.findById(userId).orElseThrow(UserNotFoundException::new);
+        Transaction transactionFind = this.transactionRepositoryPort.findById(transaction.getId());
+
+        if(!transactionFind.getSenderId().equals(userFind.getId())){
+            throw new UnauthorizedException();
+        }
+
+        return this.transactionRepositoryPort.update(transaction);
+    }
 }

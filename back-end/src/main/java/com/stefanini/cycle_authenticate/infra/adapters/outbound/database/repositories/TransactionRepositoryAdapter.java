@@ -57,4 +57,10 @@ public class TransactionRepositoryAdapter implements TransactionRepositoryPort {
 
         return transactionModel.map(this.transactionMapper::toDomain).orElse(null);
     }
+
+    @Override
+    public Transaction update(Transaction transaction) {
+        TransactionModel transactionModel = this.jpaTransactionModelRepository.save(this.transactionMapper.toInfra(transaction));
+        return this.transactionMapper.toDomain(transactionModel);
+    }
 }

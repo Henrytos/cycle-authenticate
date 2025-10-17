@@ -40,7 +40,8 @@ public class AuthenticateController {
     @Tag(name = "user")
     @Operation(
             summary = "Criação de usuario",
-            description = "rota de criação de nova conta de usuario"
+            description = "rota de criação de nova conta de usuario",
+            security = {@SecurityRequirement(name = "")} // Remove o cadeado do Swagger
     )
     @ApiResponses(
             {
@@ -57,11 +58,11 @@ public class AuthenticateController {
                     @ApiResponse(
                             description =
                                     """
-                                    Requisição inválida (400) devido a diversos motivos, como:
-                                    - Campo inválido, e-mail já cadastrado, ou erro de formato.
-                                    - E-mail inválido.
-                                    - Senha fora do padrão (caracter especial, maiúscula/minúscula, máx 20 caracteres).
-                                    """,
+                                            Requisição inválida (400) devido a diversos motivos, como:
+                                            - Campo inválido, e-mail já cadastrado, ou erro de formato.
+                                            - E-mail inválido.
+                                            - Senha fora do padrão (caracter especial, maiúscula/minúscula, máx 20 caracteres).
+                                            """,
                             content = @Content(schema = @Schema(implementation = ResponseMessageDTO.class, contentMediaType = MediaType.APPLICATION_JSON_VALUE)),
                             responseCode = "400"
                     ),
@@ -78,7 +79,8 @@ public class AuthenticateController {
     @Tag(name = "auth")
     @Operation(
             summary = "Autenticação de usuario",
-            description = "Rota de autenticação atravéz de email e senha "
+            description = "Rota de autenticação atravéz de email e senha ",
+            security = {@SecurityRequirement(name = "")} // Remove o cadeado do Swagger
     )
     @ApiResponses(
             {

@@ -134,7 +134,7 @@ export class Dashboard implements OnInit {
       this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
         type: 'doughnut',
         data: {
-          labels: ['Ganhos', 'Gastos', 'Investimentos'],
+          labels: ['Receita', 'Gastos', 'Investimentos'],
           datasets: [{
             label: 'Vendas',
             data: [this.metrics().deposit, this.metrics().spent, this.metrics().investment],

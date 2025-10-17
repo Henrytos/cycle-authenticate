@@ -26,12 +26,17 @@
   }
   .value-transaction {
     font-weight: $font-bold;
-
-    &.entry {
+    display: flex;
+    gap: 2px;
+    &.DEPOSIT {
       color: $green;
     }
 
-    &.spent {
+    &.INVESTMENT {
+      color: $white;
+    }
+
+    &.SPENT {
       color: $red;
     }
   }

@@ -5,7 +5,7 @@ public class UserAlreadyExistsException extends RuntimeException{
     private int status = 401;
 
     public UserAlreadyExistsException(){
-        super("the user already exists in the application");
+        super("Usuario existe na aplicação");
     }
 
     public UserAlreadyExistsException(String message){
@@ -17,11 +17,11 @@ public class UserAlreadyExistsException extends RuntimeException{
         this.status = status;
     }
 
-    public int getStatusCode() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatusCode(int status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }

@@ -33,17 +33,29 @@ header {
   }
 
   .rigth {
-    cursor: pointer;
-    display: flex;
-    gap: 8px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    color: $white;
-    font-weight: $font-medium;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    all: unset !important;
+    cursor: pointer !important;
+    display: flex !important;
+    gap: 8px !important;
+    padding: 10px 16px !important;
+    border-radius: 8px !important;
+    color: $white !important;
+    font-weight: $font-medium !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 
   @media (min-width: 1200px) {
+    padding: 24px 5%;
+  }
+
+  @media (min-width: 1600px) {
     padding: 16px 10%;
   }
+}
+
+.button-exit span {
+  color: $red;
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }

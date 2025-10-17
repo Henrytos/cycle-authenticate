@@ -1,21 +1,42 @@
 <header>
   <div class="left">
     <app-logo />
-
-    <a routerLink="/dashboard" class="active">
-      Dashboard
-    </a>
-
-    <a routerLink="/transactions">
-      Transações
-    </a>
+    @if(path.includes("dashboard")){
+    <a routerLink="/dashboard" class="active"> Dashboard </a>
+    } @else {
+    <a routerLink="/dashboard"> Dashboard </a>
+    } @if(path.includes("transaction")){
+    <a routerLink="/transactions" class="active"> Transações </a>
+    } @else {
+    <a routerLink="/transactions"> Transações </a>
+    }
   </div>
 
-  <div class="rigth">
-    <img src="/profile.png" alt="foto de perfil">
-
-    <span>
-      Henry
-    </span>
-  </div>
+  <button class="rigth" matButton [matMenuTriggerFor]="menu">
+    <img src="/profile.png" alt="foto de perfil" />
+    {{ profileName() }}
+  </button>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button mat-menu-item class="button-exit" (click)="logoutUser()">
+      <span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-log-out-icon lucide-log-out"
+        >
+          <path d="m16 17 5-5-5-5" />
+          <path d="M21 12H9" />
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+        </svg>
+        <span> Sair </span></span
+      >
+    </button>
+  </mat-menu>
 </header>

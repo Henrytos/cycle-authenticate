@@ -22,11 +22,11 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserServicePort {
 
-    private UserRepositoryPort userRepositoryPort;
+    private final UserRepositoryPort userRepositoryPort;
 
-    private EncryptionServicePort encryptionServicePort;
+    private final EncryptionServicePort encryptionServicePort;
 
-    private SessionTokenServicePort sessionTokenService;
+    private final SessionTokenServicePort sessionTokenService;
 
     public UserServiceImpl(UserRepositoryPort userRepositoryPort, EncryptionServicePort encryptionServicePort, SessionTokenServicePort sessionTokenService) {
         this.userRepositoryPort = userRepositoryPort;
@@ -46,9 +46,16 @@ public class UserServiceImpl implements UserServicePort {
         }
         Password passwordEncode = new Password(this.encryptionServicePort.encode(createUserDTO.password()));
 
-        Optional<User> userFind = this.userRepositoryPort.findByEmail(email);
-        if (userFind.isPresent()) {
-            throw new UserAlreadyExistsException();
+        Optional<User> userFindUsername = this.userRepositoryPort.findByUsername(createUserDTO.username());
+
+        if (userFindUsername.isPresent()) {
+            throw new UserAlreadyExistsException("username/email já existe");
+        }
+
+        Optional<User> userFindEmail = this.userRepositoryPort.findByEmail(email);
+
+        if (userFindEmail.isPresent()) {
+            throw new UserAlreadyExistsException("username/email já existe");
         }
 
         User user = new User(createUserDTO.username(), email, passwordEncode, createUserDTO.dateOfBirth(), UserRole.valueOf(createUserDTO.userRole()));
@@ -62,7 +69,7 @@ public class UserServiceImpl implements UserServicePort {
         Boolean passwordMatch = this.encryptionServicePort.match(password.getValue(), user.getPassword().getValue());
 
         if (!passwordMatch) {
-            throw new InputInvalidException("email/password invalid");
+            throw new InputInvalidException("email/password invalido");
         }
 
         return this.sessionTokenService.generator(user.getId());

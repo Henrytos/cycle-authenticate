@@ -2,33 +2,35 @@
 
   <div class="left">
     <div class="icon-transaction">
-      @if(transaction.typeMethod=="credito"){
+      @if(transaction.methodPayment=="CREDIT"){
       <lucide-icon name="credit-card"></lucide-icon>
-      } @else if (transaction.typeMethod=="boleto") {
+      } @else if (transaction.methodPayment=="TICKET") {
       <lucide-icon name="tally-4"></lucide-icon>
-      } @else if (transaction.typeMethod == "pix") {
+      } @else if (transaction.methodPayment == "PIX") {
       <lucide-icon name="badge-dollar-sign"></lucide-icon>
       }
     </div>
 
     <div class="info-transaction">
-      <h4>
+      <h4 style="font-weight: 400;">
         {{transaction.title}}
       </h4>
 
       <p class="date-transaction">
-        {{transaction.date}}
+        {{transaction.dateOfPayment | date: 'mediumDate'}}
       </p>
     </div>
   </div>
 
-  <span class="value-transaction {{transaction.type}}">
-    @if(transaction.type=="entry"){
-    +
-    } @else{
-    -
-    }
-    {{transaction.value}}
+  <span class="value-transaction {{transaction.typeTransaction}}">
 
+    <span>
+      @if(transaction.typeTransaction=="DEPOSIT"){+} @else if(transaction.typeTransaction=="SPENT"){-}
+
+    </span>
+    <span>
+      {{transaction.value
+      | currency:'BRL'}}
+    </span>
   </span>
 </div>

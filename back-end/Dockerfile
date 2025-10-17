@@ -4,12 +4,4 @@ WORKDIR /app
 
 COPY . .
 
-RUN mvn clean package -DskipTests
-
-FROM ubuntu/jre:21-24.04_stable
-
-COPY --from=builder /app/target/cycle-authenticate-0.0.1-SNAPSHOT.jar app.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["mvn", "spring-boot:run", "-Dspring.devtools.restart.enabled=true"]

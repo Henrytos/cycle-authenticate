@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>Adicionar Transação</h2>
+<mat-dialog-content>
+
+  <p>
+    Insira as informações abaixo
+  </p>
+  <form action="" [noValidate]="true" (ngSubmit)="createTransactionFormSubmit()" [formGroup]="createTransactionForm">
+    <div class="form-control">
+      <label for="title">
+        Titulo
+      </label>
+
+      <input type="text" name="title" id="title" formControlName="title">
+    </div>
+
+    <div class="form-control">
+      <label for="value">
+        Valor
+      </label>
+
+      <!-- TODO: ADICIONAR MARCARA -->
+      <input type="text" name="value" id="value" formControlName="value" mask="separator.2" thousandSeparator="."
+        decimalMarker="," prefix="R$ ">
+    </div>
+
+
+    <div class="form-control select-control">
+      <label for="typeTransaction">
+        Tipo da transação
+      </label>
+
+      <!-- TODO: ADICIONAR MARCARA -->
+      <select name="typeTransaction" id="typeTransaction" formControlName="typeTransaction">
+        <option value="" disabled>Secione</option>
+        <option value="DEPOSIT">Deposito</option>
+        <option value="SPENT">Gasto</option>
+        <option value="INVESTMENT">Investimento</option>
+      </select>
+    </div>
+
+    <div class="form-control select-control">
+      <label for="methodPayment">
+        Método de pagamento
+      </label>
+
+      <!-- TODO: ADICIONAR MARCARA -->
+      <select name="methodPayment" id="methodPayment" formControlName="methodPayment">
+        <option value="" disabled>Secione</option>
+        <option value="PIX">Pix</option>
+        <option value="CREDIT">Cartão</option>
+        <option value="TICKET">Boleto</option>
+      </select>
+
+    </div>
+    <div class="form-control select-control">
+      <label for="typeTransaction">
+        Data
+      </label>
+
+      <!-- TODO: ADICIONAR MARCARA -->
+      <input type="date" formControlName="dateOfPayment">
+    </div>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close class="cancel-transaction">Cancelar</button>
+  <button matButton mat-dialog-close (click)="createTransactionFormSubmit()" class="add-transaction">
+    @if (data.transactionDefault) {
+    Atualizar
+    } @else{
+    Adcionar
+    }
+  </button>
+</mat-dialog-actions>

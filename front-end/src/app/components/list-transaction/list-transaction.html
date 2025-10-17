@@ -1,8 +1,7 @@
 <div class="card list-trasactions">
   <div class="top">
     <h2>
-      Transações
-    </h2>
+      Transações Recentes </h2>
 
     <a routerLink="/transactions">
       Ver Mais
@@ -12,8 +11,11 @@
   <span class="line">
   </span>
   <div class="transactions">
-    @for (transaction of transactions; track transaction.id) {
+    @for (transaction of transactions(); track transaction.id) {
     <app-transaction [transaction]="transaction"></app-transaction>
+    }
+    @if(transactions().length == 0) {
+    <p class="no-transactions">Nenhuma transação encontrada😞.</p>
     }
   </div>
 

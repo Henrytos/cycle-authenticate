@@ -57,6 +57,7 @@ main {
         flex-direction: column;
         label {
           margin-bottom: 8px;
+          font-size: $text-sm;
         }
 
         input {

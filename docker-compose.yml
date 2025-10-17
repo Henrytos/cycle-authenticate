@@ -1,4 +1,3 @@
-
 services:
   database:
     container_name: cycle_database
@@ -11,14 +10,18 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
     networks:
       - cycle_network
+    volumes:
+      - cycle_database_volume:/var/lib/postgresql/data
 
   api:
     container_name: cycle_api
     build:
-      context: .
+      context: ./back-end
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    volumes:
+      - ./back-end:/app
     env_file:
       - .env
     depends_on:
@@ -26,7 +29,24 @@ services:
     networks:
       - cycle_network
 
-
+  web:
+    container_name: cycle_web
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api
+    networks:
+      - cycle_network
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
 networks:
   cycle_network:
     name: cycle_network
+
+volumes:
+  cycle_database_volume:
+    name: cycle_database_volume

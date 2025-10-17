@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DEFAULT_CURRENCY_CODE, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Title } from "../../components/title/title";
 import { Header } from "../../components/header/header";
 import { LucideAngularModule } from 'lucide-angular';
@@ -11,45 +11,133 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
-
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CreateNewTransactionDialogForm } from '../../components/create-new-transaction-dialog-form/create-new-transaction-dialog-form';
+import { GetMetricsDashboardService, GetMetricsDashboardServiceResponse } from '../../services/get-metrics-dashboard-service';
+import { TransactionStateService } from '../../services/transaction-state-service';
+import { CurrencyPipe, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 export interface TransactionI {
-  id: number,
-  title: string,
-  date: string,
-  value: string,
-  type: "entry" | "spent",
-  typeMethod: "pix" | "boleto" | "credito"
+  id: string
+  senderId: string
+  title: string
+  value: number
+  typeTransaction: "DEPOSIT" | "SPENT" | "INVESTMENT"
+  dateOfPayment: string
+  methodPayment: "PIX" | "TICKET" | "CREDIT"
 }
+
+registerLocaleData(localePt);
+
+export interface Expenses {
+  value: number
+  title: string
+  percentage: number
+}
+
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Title, Header, LucideAngularModule, ListTransaction],
+  imports: [Title, Header, LucideAngularModule, ListTransaction, MatDialogModule, CurrencyPipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
-  standalone: true
+  standalone: true,
+  providers: [{ provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' }]
 })
 // Adiciona OnInit à implementação para consistência
-export class Dashboard implements OnInit, AfterViewInit {
+export class Dashboard implements OnInit {
+
+  expenses = signal([] as Expenses[]);
+
+  metrics = signal({} as GetMetricsDashboardServiceResponse)
+
+  readonly dialog = inject(MatDialog);
+
 
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
+  private chartInstance: Chart | undefined;
 
-  ngOnInit(): void {
+
+  @ViewChild('saleElement')
+  private saleElement!: ElementRef<HTMLElement>
+
+  constructor(
+    private getMetricsDashboardService: GetMetricsDashboardService,
+    private transactionStateService: TransactionStateService
+
+  ) {
+    transactionStateService.transactionMetricsUpdate$.subscribe((metrics) => {
+      this.metrics.update(() => metrics)
+      this.loadChart()
+    })
+
+    transactionStateService.transactionThreeBiggestUpdate$.subscribe(expenses => {
+      this.expenses.update(() => expenses)
+    })
+
   }
 
-  ngAfterViewInit(): void {
+  loadChart() {
+    if (this.chartInstance) {
+
+      this.chartInstance.data.datasets[0].data[0] = this.metrics().deposit
+      this.chartInstance.data.datasets[0].data[1] = this.metrics().spent
+      this.chartInstance.data.datasets[0].data[2] = this.metrics().investment
+
+      this.chartInstance.update()
+    } else {
+      this.load()
+    }
+  }
+
+  ngOnInit(): void {
+
+    this.getMetricsDashboardService.execute().subscribe((res) => {
+      this.metrics.update(() => res);
+      this.load()
+    })
+
+    this.transactionStateService.loadTransactions()
+    this.transactionStateService.loadThreeBiggestExpenses()
+  }
+  clickEye() {
+    let value = this.saleElement.nativeElement.textContent;
+
+    if (value.includes("#")) {
+      this.saleElement.nativeElement.textContent = this.metrics().sale.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).toString().replaceAll(" ", "");
+    } else {
+      value = value.replaceAll(/\d/g, "#").replaceAll(" ", "");
+
+      this.saleElement.nativeElement.textContent = value
+
+    }
+  }
+
+  openDialog() {
+    this.dialog.open(CreateNewTransactionDialogForm, {
+      data: {
+        isUpdated: false
+      }
+    });
+  }
+
+  load(): void {
 
     // **REGISTRO DOS COMPONENTES NECESSÁRIOS PARA O GRÁFICO DE PIZZA**
     Chart.register(ArcElement, PieController, Tooltip, Legend);
 
     if (this.chartCanvas) {
-      new Chart(this.chartCanvas.nativeElement, {
+      this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
         type: 'doughnut',
         data: {
-          labels: ['Ganhos', 'Gastos', 'Investimentos'],
+          labels: ['Receita', 'Gastos', 'Investimentos'],
           datasets: [{
             label: 'Vendas',
-            data: [12, 4, 3],
+            data: [this.metrics().deposit, this.metrics().spent, this.metrics().investment],
             backgroundColor: [
               'rgba(85, 176, 46,0.8)',
               'rgba(233, 48, 48,0.8)',
@@ -73,3 +161,5 @@ export class Dashboard implements OnInit, AfterViewInit {
     }
   }
 }
+
+

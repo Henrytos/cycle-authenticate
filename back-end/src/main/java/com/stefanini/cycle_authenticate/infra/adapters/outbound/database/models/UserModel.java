@@ -42,6 +42,9 @@ public class UserModel implements UserDetails {
     @Column(name = "user_role")
     private UserRole userRole = UserRole.ROLE_USER;
 
+    @OneToMany(mappedBy = "sender")
+    private List<TransactionModel> transactionModels;
+
     public UserModel(String username, String email, String password, LocalDate dateOfBrith) {
         this.username = username;
         this.email = email;

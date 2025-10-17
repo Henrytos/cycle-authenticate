@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Title } from "../../components/title/title";
 import { Logo } from "../../components/logo/logo";
+import { CreateAccountService } from '../../services/create-account-service';
+import { toast } from 'ngx-sonner';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -12,10 +15,12 @@ import { Logo } from "../../components/logo/logo";
 })
 export class Register {
   registerForm: FormGroup;
+  protected readonly toast = toast;
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private createAccountService: CreateAccountService
   ) {
 
     this.registerForm = formBuilder.group(
@@ -33,17 +38,33 @@ export class Register {
       email,
       password,
       dateOfBirth } = this.registerForm.value;
-    console.log({
-      username,
-      email,
-      password,
-      dateOfBirth
-    })
-    if (this.registerForm.valid) {
-      this.registerForm.reset()
-      this.router.navigate(['/login'])
 
+    if (this.registerForm.valid) {
+      this.createAccountService.execute({
+        username,
+        email,
+        password,
+        dateOfBirth
+      }).pipe(
+        tap(() => {
+          this.router.navigate(["/login"])
+        })
+      ).subscribe({
+        next() {
+          toast.success("Sucesso em cadastrar novo usuario")
+        },
+        error(err) {
+          const { message } = err.error;
+
+          toast.error(message)
+        }
+      })
+
+    } else {
+      this.toast.warning("Erro no fomulario, por favor preencha todos os campos")
     }
+
+    this.registerForm.markAllAsTouched()
 
   }
 }

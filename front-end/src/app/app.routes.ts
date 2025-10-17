@@ -2,18 +2,31 @@ import { Routes } from '@angular/router';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Dashboard } from './pages/dashboard/dashboard';
+import { tokenJwtGuardGuard } from './guards/token-jwt-guard-guard';
+import { Transactions } from './pages/transactions/transactions';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
-    path: "login",
-    component: Login
+    path: 'login',
+    title: 'Entrar',
+    component: Login,
   },
   {
-    path: "register",
-    component: Register
+    path: 'register',
+    title: 'Cadastre-se',
+    component: Register,
   },
   {
-    path: "dashboard",
-    component: Dashboard
-  }
+    path: 'dashboard',
+    title: 'Dashboard',
+    component: Dashboard,
+    canActivate: [tokenJwtGuardGuard],
+  },
+  {
+    path: 'transactions',
+    title: 'Transações',
+    component: Transactions,
+    canActivate: [tokenJwtGuardGuard],
+  },
 ];

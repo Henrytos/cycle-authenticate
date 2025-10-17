@@ -21,7 +21,7 @@ public class SessionTokenServiceAdapter implements SessionTokenServicePort<Decod
     public SessionTokenResponseDTO generator(UUID identifier) {
         Algorithm algorithm = Algorithm.HMAC256(this.jwtSecretKey);
 
-        Instant expiresAt = Instant.now().plus(Duration.ofMinutes(10));
+        Instant expiresAt = Instant.now().plus(Duration.ofHours(10));
 
         String token = JWT.create()
                 .withIssuer("cycle authenticate enterprise")
@@ -39,7 +39,6 @@ public class SessionTokenServiceAdapter implements SessionTokenServicePort<Decod
         try {
             return JWT.require(algorithm).build().verify(token);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
 

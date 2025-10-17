@@ -42,6 +42,12 @@ public class TokenFilterChain extends OncePerRequestFilter {
             String token = header.replaceAll("Bearer ", "");
 
             DecodedJWT decodedJWT = this.sessionTokenServiceAdapter.validate(token);
+
+            if(decodedJWT == null){
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
             UUID userId = UUID.fromString(decodedJWT.getSubject());
 
             Optional<User> user = this.userRepositoryAdapter.findById(userId);
@@ -51,10 +57,12 @@ public class TokenFilterChain extends OncePerRequestFilter {
                 return;
             }
 
-            UserModel userModel = this.userMapper.toModel(user.get());
+            UserModel userModel = this.userMapper.toInfra(user.get());
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userModel.getUsername(), null, userModel.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            request.setAttribute("userId", userModel.getId());
         }
 
         filterChain.doFilter(request, response);

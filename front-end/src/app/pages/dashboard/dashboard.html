@@ -1,54 +1,49 @@
 <main>
-
-  <app-header />
-
+  <app-header [path]="'dashboard'" />
 
   <section>
-    <app-title>
-      Dashboard
-    </app-title>
+    <app-title> Dashboard </app-title>
 
     <div class="grid">
-
       <!-- METRICS -->
 
       <div class="charts-content">
-
         <div class="card grid-column-3 grid-row-3 chart-sale">
           <div class="top">
             <div class="icon">
               <lucide-icon name="wallet"></lucide-icon>
-
             </div>
-            <h4>
-              Saldo
-            </h4>
+            <h4>Saldo</h4>
           </div>
 
           <div class="bottom">
+            <div class="sale">
+              <h1 #saleElement>{{ metrics().sale | currency : 'BRL' }}</h1>
 
-            <h1>R$ 2.700</h1>
+              <lucide-icon name="eye" (click)="clickEye()"></lucide-icon>
+            </div>
 
-            <lucide-icon name="eye"></lucide-icon>
-
+            <button matButton (click)="openDialog()" class="button-new-transaction">
+              <p>Adicionar Transação</p>
+              <lucide-icon name="arrow-down-up"> </lucide-icon>
+            </button>
           </div>
         </div>
 
-        <div class="card grid-column-1 grid-row-3 char-investment">
+        <div class="card grid-column-1 grid-row-2 char-investment">
           <div class="top">
             <div class="icon">
               <lucide-icon name="piggy-bank"></lucide-icon>
             </div>
             <h4>Investido</h4>
           </div>
-          <div>
-            <h1>
-              R$ 2.000
-            </h1>
-
+          <div class="value-sale">
+            <h2>
+              {{ metrics().investment | currency : 'BRL' }}
+            </h2>
           </div>
         </div>
-        <div class="card grid-column-1 grid-row-3 char-up">
+        <div class="card grid-column-1 grid-row-2 char-up">
           <div class="top">
             <div class="icon">
               <lucide-icon name="trending-up"></lucide-icon>
@@ -56,38 +51,65 @@
             <h4>Receita</h4>
           </div>
 
-          <div>
-            <h1>
-              R$ 2.700
-            </h1>
-
+          <div class="value-sale">
+            <h2>
+              {{ metrics().deposit | currency : 'BRL' }}
+            </h2>
           </div>
         </div>
 
-        <div class="card grid-column-1 grid-row-3 char-down">
+        <div class="card grid-column-1 grid-row-2 char-down">
           <div class="top">
             <div class="icon">
               <lucide-icon name="trending-down"></lucide-icon>
             </div>
             <h4>Despesas</h4>
-
           </div>
-          <div>
-            <h1>
-              R$ 2.700
-            </h1>
-
+          <div class="value-sale">
+            <h2>
+              {{ metrics().spent | currency : 'BRL' }}
+            </h2>
           </div>
         </div>
 
-        <div class="card grid-column-1 grid-row-6 chart-pie">
-
+        <div class="card grid-column-1 grid-row-5 chart-pie">
           <canvas #chartCanvas></canvas>
-
         </div>
 
-        <div class="card grid-column-2 grid-row-6">
+        <div class="card grid-column-2 grid-row-5 chart-catories">
+          <h2>Os 3 Maiores Gastos Do Mês</h2>
 
+          <span class="line"></span>
+
+          <div class="categories">
+            @if (expenses().length == 0 ) {
+            <p class="no-expenses">Nenhuma despesa encontrada😞.</p>
+            }
+            @for (expense of expenses(); track expense.title) {
+            <div class="category">
+              <div class="top">
+                <h3>
+                  {{ expense.title }}
+                </h3>
+                <p>
+                  @if(expense.percentage >= 100){ +100% } @else{
+                  {{ expense.percentage }}% }
+                </p>
+              </div>
+              <div class="progress">
+                <div
+                  class="progress-target"
+                  [style.width]="(expense.percentage > 100 ? 100 : expense.percentage) + '%'"
+                ></div>
+              </div>
+
+              <span class="bottom">
+                {{ expense.value | currency : 'BRL' }}
+              </span>
+            </div>
+
+            }
+          </div>
         </div>
       </div>
 
@@ -95,6 +117,5 @@
 
       <app-list-transaction></app-list-transaction>
     </div>
-
   </section>
 </main>

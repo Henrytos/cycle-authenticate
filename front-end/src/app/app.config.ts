@@ -18,6 +18,7 @@ import {
   Menu,
   PiggyBank,
   Tally4,
+  Trash2,
   TrendingDown,
   TrendingUp,
   UserCheck,
@@ -44,6 +45,7 @@ export const appConfig: ApplicationConfig = {
         Eye,
         ArrowDownUp,
         LogOut,
+        Trash2,
       })
     ),
     provideNgxMask(),

@@ -9,4 +9,41 @@
       <lucide-icon name="arrow-down-up"> </lucide-icon>
     </button>
   </div>
+
+  <section>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Tipo</th>
+          <th>Método</th>
+          <th>Data</th>
+          <th>Valor</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+          @for (transaction of transactions(); track transaction.id) {
+        <tr>
+          <td>{{transaction.title}}</td>  
+          <td class="type">
+            <div class="bg-{{transaction.typeTransaction}}">
+              <span class="type-circle {{transaction.typeTransaction}}"></span>
+              <span class="text">{{transaction.typeTransaction | lowercase}}</span>
+            </div>
+          </td>
+          <td>{{transaction.methodPayment| lowercase}}</td>
+          <td class="date">{{transaction.dateOfPayment| date: 'longDate'}}</td>
+          <td>{{transaction.value | currency:'BRL'}}</td>
+          <td class="icon-trash">
+            <lucide-icon name="trash-2" name="trash-2" strokeWidth="2" [size]="16" color="#71717a" (click)="deleteTransaction(transaction.id)"> </lucide-icon>
+          </td>
+        </tr>            
+          }
+
+      </tbody>
+    </table>
+  </section>
 </main>

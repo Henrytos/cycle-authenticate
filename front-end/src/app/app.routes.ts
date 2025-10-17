@@ -14,33 +14,21 @@ import { Transactions } from './pages/transactions/transactions';
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
-    path: "login",
-    component: Login
+    path: 'login',
+    component: Login,
   },
   {
-    path: "register",
-    component: Register
+    path: 'register',
+    component: Register,
   },
   {
-    path: "dashboard",
+    path: 'dashboard',
     component: Dashboard,
     canActivate: [tokenJwtGuardGuard],
-    providers: [
-      GetMetricsDashboardService,
-      TransactionStateService,
-      GetProfileUserService,
-      CreateNewTransactionService
-    ]
-  }, 
+  },
   {
-    path: "transactions",
+    path: 'transactions',
     component: Transactions,
     canActivate: [tokenJwtGuardGuard],
-    providers: [
-      GetMetricsDashboardService,
-      TransactionStateService,
-      GetProfileUserService,
-      CreateNewTransactionService
-    ]
-  }
+  },
 ];

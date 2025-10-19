@@ -4,7 +4,7 @@ public class UserNotFoundException extends RuntimeException{
     private int status = 404;
 
     public UserNotFoundException(){
-        super("Usuario não encontrado");
+        super("Usuário não encontrado");
     }
 
     public UserNotFoundException(String message, int status) {

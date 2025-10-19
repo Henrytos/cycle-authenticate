@@ -4,7 +4,7 @@ public class UnauthorizedException extends RuntimeException{
     private int status = 403;
 
     public UnauthorizedException(){
-        super("usuario não autorizado");
+        super("Usuário não autorizado");
     }
 
     public UnauthorizedException(int status) {

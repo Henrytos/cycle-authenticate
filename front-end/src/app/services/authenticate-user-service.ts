@@ -3,45 +3,42 @@ import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs';
 
 interface AuthenticateUserServiceRequest {
-  email: string,
-  password: string
+  email: string;
+  password: string;
 }
 
 interface AuthenticateUserServiceResponse {
-  token: string,
+  token: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticateUserService {
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
-
-  exceute({ email, password }: AuthenticateUserServiceRequest) {
-
-    return this.httpClient.post<AuthenticateUserServiceResponse>("api/users/auth", { email, password }).pipe(
-      tap((res) => {
-        console.log(res.token)
-      })
-    )
+  execute({ email, password }: AuthenticateUserServiceRequest) {
+    return this.httpClient
+      .post<AuthenticateUserServiceResponse>('api/users/auth', { email, password })
+      .pipe(
+        tap((res) => {
+          console.log(res.token);
+        })
+      );
   }
 
   setToken(token: string) {
-    localStorage.setItem("Authorization", `Bearer ${token}`)
+    localStorage.setItem('Authorization', `Bearer ${token}`);
   }
 
   getToken() {
-    return localStorage.getItem("Authorization")
+    return localStorage.getItem('Authorization');
   }
 
   isLoggedIn() {
+    const token = localStorage.getItem('Authorization');
 
-    const token = localStorage.getItem("Authorization")
-
-    if (token == "" || !token?.includes("Bearer")) {
+    if (token == '' || !token?.includes('Bearer')) {
       return false;
     }
 
@@ -49,7 +46,6 @@ export class AuthenticateUserService {
   }
 
   logout() {
-    localStorage.removeItem("Authorization")
+    localStorage.removeItem('Authorization');
   }
-
 }

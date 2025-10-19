@@ -40,19 +40,18 @@ import { TransactionI } from '../../pages/dashboard/dashboard';
 export class CreateNewTransactionDialogForm implements OnInit {
   createTransactionForm: FormGroup;
 
-
   toast = toast;
   constructor(
     builder: FormBuilder,
     private createNewTransactionService: CreateNewTransactionService,
     private transactionStateService: TransactionStateService,
     private getMetricsDashboardService: GetMetricsDashboardService,
-    @Inject(MAT_DIALOG_DATA) public data: {
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
       isUpdated: boolean;
-      transactionDefault: TransactionI
+      transactionDefault: TransactionI;
     }
   ) {
-
     if (this.data.transactionDefault) {
       this.createTransactionForm = builder.group({
         title: [this.data.transactionDefault.title, [Validators.required]],
@@ -78,33 +77,34 @@ export class CreateNewTransactionDialogForm implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-
-
   createTransactionFormSubmit() {
     if (this.data.isUpdated) {
       if (this.createTransactionForm.valid) {
         const data = this.createTransactionForm.value;
-        console.log(data)
-        this.transactionStateService.updateTransaction({
-          ...data,
-          id: this.data.transactionDefault.id,
-          senderId: this.data.transactionDefault.senderId,
-        }).subscribe(res => {
-          this.getMetricsDashboardService.execute().subscribe((res) => {
-            this.transactionStateService.notifyTransactionsUpdated(res);
+        console.log(data);
+        this.transactionStateService
+          .updateTransaction({
+            ...data,
+            id: this.data.transactionDefault.id,
+            senderId: this.data.transactionDefault.senderId,
+          })
+          .subscribe({
+            next: (res) => {
+              this.getMetricsDashboardService.execute().subscribe((res) => {
+                this.transactionStateService.notifyTransactionsUpdated(res);
+              });
+
+              this.transactionStateService.loadThreeBiggestExpenses();
+              this.transactionStateService.loadTransactions();
+              this.transactionStateService.loadAllTransactions();
+              toast.success('Sucesso em atualizar');
+            },
+            error: () => {
+              this.toast.error('Erro em Atualizar Transação');
+            },
           });
-
-          this.transactionStateService.loadThreeBiggestExpenses();
-          this.transactionStateService.loadTransactions();
-          this.transactionStateService.loadAllTransactions();
-          toast.success("Sucesso em atualizar")
-
-        }, () => {
-          this.toast.error('Erro em Atualizar Transação');
-
-        })
       } else {
-        toast.error("Por favor prencha todos os campos corretamente, Transação não cadastrada")
+        toast.error('Por favor preencha todos os campos corretamente, Transação não cadastrada');
       }
     } else {
       if (this.createTransactionForm.valid) {
@@ -127,9 +127,8 @@ export class CreateNewTransactionDialogForm implements OnInit {
           }
         );
       } else {
-        toast.error("Por favor prencha todos os campos corretamente, Transação não cadastrada")
+        toast.error('Por favor preencha todos os campos corretamente, Transação não cadastrada');
       }
     }
   }
-
 }

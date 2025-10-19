@@ -32,7 +32,7 @@ export class Transactions implements OnInit {
 
   transactions = signal<TransactionI[]>([]);
 
-  constructor(private transactionStateService: TransactionStateService) { }
+  constructor(private transactionStateService: TransactionStateService) {}
   ngOnInit(): void {
     this.transactionStateService.getAllTransactions().subscribe((transactions) => {
       this.transactions.set(transactions); // update
@@ -46,8 +46,8 @@ export class Transactions implements OnInit {
   openDialogCreateTransaction() {
     this.dialog.open(CreateNewTransactionDialogForm, {
       data: {
-        isUpdated: false
-      }
+        isUpdated: false,
+      },
     });
   }
 
@@ -55,23 +55,23 @@ export class Transactions implements OnInit {
     this.dialog.open(CreateNewTransactionDialogForm, {
       data: {
         isUpdated: true,
-        transactionDefault: transaction
-      }
+        transactionDefault: transaction,
+      },
     });
   }
 
   deleteTransaction(id: string) {
-    this.transactionStateService.deleteById(id).subscribe(
-      () => {
+    this.transactionStateService.deleteById(id).subscribe({
+      next: () => {
         this.transactions.update((currentTransactions) =>
           currentTransactions.filter((transaction) => transaction.id !== id)
         );
 
         this.toast.success('Transação excluída com sucesso.');
       },
-      () => {
+      error: () => {
         this.toast.error('Erro ao excluir a transação. Tente novamente mais tarde.');
-      }
-    );
+      },
+    });
   }
 }

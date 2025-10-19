@@ -11,18 +11,18 @@ type TransactionStateServiceResponse = TransactionI[];
 })
 export class TransactionStateService {
   private transactionMetricsSource = new Subject<GetMetricsDashboardServiceResponse>();
-  private transactionRecentsSource = new Subject<TransactionI[]>();
+  private transactionRecentSource = new Subject<TransactionI[]>();
   private transactionThreeBiggestExpensesSource = new Subject<Expenses[]>();
   private transactionStateSource = new Subject<TransactionI[]>();
 
   transactionMetricsUpdate$: Observable<GetMetricsDashboardServiceResponse> =
     this.transactionMetricsSource.asObservable();
   transactionRecentUpdate$: Observable<TransactionI[]> =
-    this.transactionRecentsSource.asObservable();
+    this.transactionRecentSource.asObservable();
   transactionThreeBiggestUpdate$: Observable<Expenses[]> =
     this.transactionThreeBiggestExpensesSource.asObservable();
   transactionStateUpdate$: Observable<TransactionI[]> = this.transactionStateSource.asObservable();
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   loadTransactions() {
     this.httpClient
@@ -32,7 +32,7 @@ export class TransactionStateService {
         },
       })
       .subscribe((res) => {
-        this.transactionRecentsSource.next(res);
+        this.transactionRecentSource.next(res);
       });
   }
 
@@ -53,7 +53,7 @@ export class TransactionStateService {
   }
 
   notifyNewTransactionsUpdated(transactions: TransactionI[]) {
-    this.transactionRecentsSource.next(transactions);
+    this.transactionRecentSource.next(transactions);
     this.transactionStateSource.next(transactions);
   }
 
@@ -71,6 +71,6 @@ export class TransactionStateService {
   }
 
   updateTransaction(transaction: TransactionI) {
-    return this.httpClient.put<TransactionI>(`api/transactions/${transaction.id}`, transaction)
+    return this.httpClient.put<TransactionI>(`api/transactions/${transaction.id}`, transaction);
   }
 }

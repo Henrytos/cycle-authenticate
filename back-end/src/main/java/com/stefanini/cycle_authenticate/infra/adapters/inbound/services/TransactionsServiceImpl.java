@@ -1,4 +1,4 @@
-package com.stefanini.cycle_authenticate.application.services;
+package com.stefanini.cycle_authenticate.infra.adapters.inbound.services;
 
 import com.stefanini.cycle_authenticate.application.exceptions.UnauthorizedException;
 import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundException;

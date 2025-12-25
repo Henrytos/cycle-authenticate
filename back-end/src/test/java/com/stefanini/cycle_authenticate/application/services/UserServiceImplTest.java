@@ -15,6 +15,7 @@ import com.stefanini.cycle_authenticate.domain.exceptions.PasswordNotWithinStand
 import com.stefanini.cycle_authenticate.domain.value_objects.Email;
 import com.stefanini.cycle_authenticate.domain.value_objects.Password;
 import com.stefanini.cycle_authenticate.domain.value_objects.UserRole;
+import com.stefanini.cycle_authenticate.infra.adapters.inbound.services.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

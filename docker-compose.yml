@@ -1,7 +1,7 @@
 services:
   database:
     container_name: cycle_database
-    image: postgres
+    image: postgres:17
     ports:
       - "5432:5432"
     environment:

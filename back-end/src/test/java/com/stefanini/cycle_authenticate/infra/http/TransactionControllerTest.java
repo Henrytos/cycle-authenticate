@@ -2,8 +2,7 @@ package com.stefanini.cycle_authenticate.infra.http;
 
 import com.stefanini.cycle_authenticate.TestcontainersConfiguration;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.LargestExpensesDTO;
-import com.stefanini.cycle_authenticate.application.services.TransactionsServiceImpl;
-import com.stefanini.cycle_authenticate.infra.adapters.outbound.security.SessionTokenServiceAdapter;
+import com.stefanini.cycle_authenticate.infra.adapters.inbound.services.TransactionsServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +10,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.boot.test.mock.mockito.MockBean; // <--- USAR MockBean
 import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithMockUser;

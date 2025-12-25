@@ -5,6 +5,7 @@ import com.stefanini.cycle_authenticate.domain.value_objects.Password;
 import com.stefanini.cycle_authenticate.domain.value_objects.UserRole;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class User {
@@ -20,6 +21,10 @@ public class User {
     private LocalDate dateOfBrith;
 
     private UserRole userRole;
+
+    private String token;
+
+    private LocalDateTime expireAtToken;
 
     public User() {
     }
@@ -101,7 +106,21 @@ public class User {
         this.dateOfBrith = dateOfBrith;
     }
 
+    public String getToken() {
+        return token;
+    }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public LocalDateTime getExpireAtToken() {
+        return expireAtToken;
+    }
+
+    public void setExpireAtToken(LocalDateTime expireAtToken) {
+        this.expireAtToken = expireAtToken;
+    }
 
     @Override
     public String toString() {

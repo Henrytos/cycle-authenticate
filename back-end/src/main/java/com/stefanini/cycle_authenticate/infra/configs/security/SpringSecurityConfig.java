@@ -29,7 +29,8 @@ public class SpringSecurityConfig {
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/users",
-            "/users/auth"
+            "/users/auth",
+            "/users/recover"
     };
 
     private final String[] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {

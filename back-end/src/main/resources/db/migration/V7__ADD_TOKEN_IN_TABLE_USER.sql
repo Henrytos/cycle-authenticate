@@ -1,0 +1,3 @@
+ALTER TABLE users ADD COLUMN token VARCHAR(512);
+
+ALTER TABLE users ADD COLUMN expire_at_token TIMESTAMP;

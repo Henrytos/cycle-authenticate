@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,6 +38,11 @@ public class UserModel implements UserDetails {
 
     @Column(name = "date_of_brith")
     private LocalDate dateOfBrith;
+
+    private String token;
+
+    @Column(name = "expire_at_token")
+    private LocalDateTime expireAtToken;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")

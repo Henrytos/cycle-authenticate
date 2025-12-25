@@ -1,6 +1,7 @@
 package com.stefanini.cycle_authenticate.infra.http;
 
 import com.stefanini.cycle_authenticate.application.exceptions.UserNotFoundException;
+import com.stefanini.cycle_authenticate.application.ports.inbound.services.AuthServicePort;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.UserServicePort;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.CreateUserBodyDTO;
 import com.stefanini.cycle_authenticate.application.ports.inbound.services.dtos.SessionTokenDTO;
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 @SecurityRequirement(name = "bearerAuth")
+@RequiredArgsConstructor
 public class AuthenticateController {
 
-    private UserServicePort userServicePort;
+    private final UserServicePort userServicePort;
 
-    public AuthenticateController(UserServicePort userServicePort) {
-        this.userServicePort = userServicePort;
-    }
+    private final AuthServicePort authServicePort;
 
     @Tag(name = "user")
     @Operation(
@@ -114,4 +115,12 @@ public class AuthenticateController {
         return ResponseEntity.ok().body(sessionTokenDTO);
     }
 
+    @PostMapping("/recover")
+    public ResponseEntity<Object> sendRecoveryAccount(
+            @RequestBody String email
+    ){
+        authServicePort.sendRecoveryMail(email);
+
+        return ResponseEntity.ok().build();
+    }
 }
